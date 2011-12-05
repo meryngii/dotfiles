@@ -1,8 +1,11 @@
 set nocompatible
 
 colorscheme desert
-
 set guifont=Ubuntu\ Mono\ 11
+
+"Vundleの設定
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
 
 set tabstop=4
 "tabが押されたときに実際に挿入される空白の文字数
