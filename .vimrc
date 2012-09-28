@@ -4,13 +4,16 @@ set nocompatible
 set nobackup
 
 "Vundleの設定
+filetype off
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
-Bundle "Shougo/vimproc"
-Bundle "Shougo/vimshell"
-Bundle "Shougo/unite.vim"
-Bundle "Shougo/neocomplcache"
+"Bundle "Shougo/vimproc"
+"Bundle "Shougo/vimshell"
+"Bundle "Shougo/unite.vim"
+"Bundle "Shougo/neocomplcache"
+
+filetype plugin indent on
 
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
@@ -46,7 +49,8 @@ let g:netrw_liststyle = 3
 
 " Dropbox
 if has('win32')
-    cd $HOME\My Documents\Dropbox
+    cd $HOME
+    "cd $HOME\My Documents\Dropbox
 else
     cd ~/Dropbox
 endif
