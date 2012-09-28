@@ -8,10 +8,10 @@ filetype off
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
-"Bundle "Shougo/vimproc"
-"Bundle "Shougo/vimshell"
-"Bundle "Shougo/unite.vim"
-"Bundle "Shougo/neocomplcache"
+Bundle "Shougo/vimproc"
+Bundle "Shougo/vimshell"
+Bundle "Shougo/unite.vim"
+Bundle "Shougo/neocomplcache"
 
 filetype plugin indent on
 
