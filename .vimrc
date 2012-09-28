@@ -1,11 +1,19 @@
+
 set nocompatible
 
-colorscheme desert
-set guifont=Ubuntu\ Mono\ 11
+set nobackup
 
 "Vundleの設定
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
+
+Bundle "Shougo/vimproc"
+Bundle "Shougo/vimshell"
+Bundle "Shougo/unite.vim"
+Bundle "Shougo/neocomplcache"
+
+" neocomplcache
+let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
 
 set tabstop=4
 "tabが押されたときに実際に挿入される空白の文字数
@@ -37,5 +45,9 @@ endif
 let g:netrw_liststyle = 3
 
 " Dropbox
-cd ~/Dropbox
+if has('win32')
+    cd $HOME\My Documents\Dropbox
+else
+    cd ~/Dropbox
+endif
 
