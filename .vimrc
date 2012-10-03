@@ -1,9 +1,17 @@
+" *** .vimrc for meryngii ***
 
+" iMproved!
 set nocompatible
 
-set nobackup
+let s:is_windows = has('win32') || has('win64')
 
-"Vundleの設定
+" swap & backup
+set swapfile
+set directory=~/.vim/swp
+set backup
+set backupdir=~/.vim/backup
+
+" Vundle's configuration
 filetype off
 set rtp+=~/.vim/vundle.git/
 call vundle#rc()
@@ -28,6 +36,13 @@ set shiftwidth=4
 set autoindent
 set expandtab
 
+" enable incremental search
+set incsearch
+" enable hilighting
+set hlsearch
+
+
+
 "set wildmode=list,full
 "When more than one match, list all matches and complete first match.
 
@@ -37,9 +52,9 @@ set wildmode=list:longest,full
 set number
 "set cmdheight=3
 
-if !has('win32')
-set encoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
+if !s:is_windows
+    set encoding=utf-8
+    set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
 endif
 
 
@@ -47,7 +62,7 @@ endif
 let g:netrw_liststyle = 3
 
 " Dropbox
-if has('win32')
+if s:is_windows
     cd $HOME
     "cd $HOME\My Documents\Dropbox
 else
