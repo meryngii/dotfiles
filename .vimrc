@@ -13,13 +13,17 @@ set backupdir=~/.vim/backup
 
 " Vundle's configuration
 filetype off
-set rtp+=~/.vim/vundle.git/
-call vundle#rc()
 
-Bundle "Shougo/vimproc"
-Bundle "Shougo/vimshell"
-Bundle "Shougo/unite.vim"
-Bundle "Shougo/neocomplcache"
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+NeoBundle "Shougo/vimproc"
+NeoBundle "Shougo/vimshell"
+NeoBundle "Shougo/unite.vim"
+NeoBundle "Shougo/neocomplcache"
 
 filetype plugin indent on
 
