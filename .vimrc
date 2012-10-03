@@ -11,7 +11,7 @@ set directory=~/.vim/swp
 set backup
 set backupdir=~/.vim/backup
 
-" Vundle's configuration
+" NeoBundle's configuration
 filetype off
 
 if has('vim_starting')
@@ -20,15 +20,31 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+" General
 NeoBundle "Shougo/vimproc"
 NeoBundle "Shougo/vimshell"
 NeoBundle "Shougo/unite.vim"
+NeoBundle "Shougo/vimfiler"
+" Completion
 NeoBundle "Shougo/neocomplcache"
+NeoBundle 'Shougo/neocomplcache-snippets-complete'
+"NeoBundle 'taichouchou2/vim-rsense'
+" Comment
+NeoBundle 'tomtom/tcomment_vim'
 
 filetype plugin indent on
 
+" vimfiler
+"let g:vimfiler_edit_action = 'tabopen'
+nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
+
 " neocomplcache
-let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
+let g:neocomplcache_enable_at_startup = 1
+
+imap <C-F>     <Plug>(neocomplcache_snippets_expand)
+smap <C-F>     <Plug>(neocomplcache_snippets_expand)
+imap <C-U>     <Esc>:Unite snippet<CR>
+
 
 set tabstop=4
 "tabが押されたときに実際に挿入される空白の文字数
@@ -66,6 +82,8 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 
 " netrwは常にtree view
 let g:netrw_liststyle = 3
+
+let g:netrw
 
 " Dropbox
 if s:is_windows
