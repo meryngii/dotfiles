@@ -83,8 +83,6 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 " netrwは常にtree view
 let g:netrw_liststyle = 3
 
-let g:netrw
-
 " Dropbox
 if s:is_windows
     cd $HOME
