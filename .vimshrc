@@ -1,0 +1,2 @@
+alias dir='cmd /c dir /w'
+
