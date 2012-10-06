@@ -31,10 +31,12 @@ NeoBundle 'Shougo/neocomplcache-snippets-complete'
 "NeoBundle 'taichouchou2/vim-rsense'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'thinca/vim-fontzoom'
 
 filetype plugin indent on
 
 " vimfiler
+let g:vimfiler_as_default_explorer = 1
 "let g:vimfiler_edit_action = 'tabopen'
 nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
 
