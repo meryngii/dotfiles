@@ -29,8 +29,12 @@ NeoBundle "Shougo/vimfiler"
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
 "NeoBundle 'taichouchou2/vim-rsense'
+" Text
+NeoBundle 'Align'
+NeoBundle 'surround.vm'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
+" Other
 NeoBundle 'thinca/vim-fontzoom'
 
 filetype plugin indent on
@@ -46,6 +50,9 @@ let g:neocomplcache_enable_at_startup = 1
 imap <C-F>     <Plug>(neocomplcache_snippets_expand)
 smap <C-F>     <Plug>(neocomplcache_snippets_expand)
 imap <C-U>     <Esc>:Unite snippet<CR>
+
+" Align
+let g:Align_xstrlen = 3
 
 
 set tabstop=4
