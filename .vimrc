@@ -31,7 +31,7 @@ NeoBundle 'Shougo/neocomplcache-snippets-complete'
 "NeoBundle 'taichouchou2/vim-rsense'
 " Text
 NeoBundle 'Align'
-NeoBundle 'surround.vm'
+NeoBundle 'surround.vim'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
 " Other
@@ -47,9 +47,30 @@ nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1
 
-imap <C-F>     <Plug>(neocomplcache_snippets_expand)
-smap <C-F>     <Plug>(neocomplcache_snippets_expand)
-imap <C-U>     <Esc>:Unite snippet<CR>
+"imap <C-F>     <Plug>(neocomplcache_snippets_expand)
+"smap <C-F>     <Plug>(neocomplcache_snippets_expand)
+"imap <C-U>     <Esc>:Unite snippet<CR>
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
 
 " Align
 let g:Align_xstrlen = 3
