@@ -33,6 +33,11 @@ NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'thinca/vim-fontzoom'
 
+NeoBundle 'surround.vim'
+
+" IM
+NeoBundle "fuenor/im_control.vim"
+
 filetype plugin indent on
 
 " vimfiler
