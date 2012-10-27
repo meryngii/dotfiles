@@ -27,7 +27,7 @@ NeoBundle "Shougo/unite.vim"
 NeoBundle "Shougo/vimfiler"
 " Completion
 NeoBundle "Shougo/neocomplcache"
-NeoBundle 'Shougo/neocomplcache-snippets-complete'
+NeoBundle 'Shougo/neosnippet'
 "NeoBundle 'taichouchou2/vim-rsense'
 " Text
 NeoBundle 'Align'
@@ -49,36 +49,56 @@ let g:vimfiler_as_default_explorer = 1
 "let g:vimfiler_edit_action = 'tabopen'
 nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
 
-" neocomplcache
-let g:neocomplcache_enable_at_startup = 1
 
-"imap <C-F>     <Plug>(neocomplcache_snippets_expand)
-"smap <C-F>     <Plug>(neocomplcache_snippets_expand)
-"imap <C-U>     <Esc>:Unite snippet<CR>
+if has('gui_running')
+    " neocomplcache
+    let g:neocomplcache_enable_at_startup = 1
 
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+    "imap <C-F>     <Plug>(neocomplcache_snippets_expand)
+    "smap <C-F>     <Plug>(neocomplcache_snippets_expand)
+    "imap <C-U>     <Esc>:Unite snippet<CR>
 
-" SuperTab like snippets behavior.
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+    " Plugin key-mappings.
+    imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+    smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+    inoremap <expr><C-g>     neocomplcache#undo_completion()
+    inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    " SuperTab like snippets behavior.
+    "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplcache#close_popup()
+    inoremap <expr><C-e>  neocomplcache#cancel_popup()
+endif
 
 " Align
 let g:Align_xstrlen = 3
+
+" VimShell
+
+
+"--- Key Bindings ---
+nnoremap <C-left> :vertical resize -5<cr>
+nnoremap <C-right> :vertical resize +5<cr>
+nnoremap <C-down> :resize +2<cr>
+nnoremap <C-up> :resize -2<cr>
+
+
+augroup hack234
+  autocmd!
+  if has('win32')
+    autocmd FocusGained * set transparency=240
+    autocmd FocusLost * set transparency=212
+  endif
+augroup END
 
 
 set tabstop=4
@@ -123,6 +143,6 @@ if s:is_windows
     cd $HOME
     "cd $HOME\My Documents\Dropbox
 else
-    cd ~/Dropbox
+    cd ~
 endif
 
