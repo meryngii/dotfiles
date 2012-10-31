@@ -83,7 +83,9 @@ endif
 let g:Align_xstrlen = 3
 
 " VimShell
+nnoremap <C-x> :VimShell -split<cr>
 
+let g:vimshell_right_prompt = 'getcwd()'
 
 "--- Key Bindings ---
 nnoremap <C-left> :vertical resize -5<cr>
@@ -91,6 +93,7 @@ nnoremap <C-right> :vertical resize +5<cr>
 nnoremap <C-down> :resize +2<cr>
 nnoremap <C-up> :resize -2<cr>
 
+nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
 augroup hack234
   autocmd!
