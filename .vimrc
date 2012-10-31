@@ -91,6 +91,27 @@ nnoremap <C-right> :vertical resize +5<cr>
 nnoremap <C-down> :resize +2<cr>
 nnoremap <C-up> :resize -2<cr>
 
+nnoremap <F7> :call ToggleFullScreen()<CR>
+function! ToggleFullScreen()
+  if &guioptions =~# 'C'
+    set guioptions-=C
+    if exists('s:go_temp')
+      if s:go_temp =~# 'm'
+        set guioptions+=m
+      endif
+      if s:go_temp =~# 'T'
+        set guioptions+=T
+      endif
+    endif
+    simalt ~r
+  else
+    let s:go_temp = &guioptions
+    set guioptions+=C
+    set guioptions-=m
+    set guioptions-=T
+    simalt ~x
+  endif
+endfunction
 
 augroup hack234
   autocmd!
@@ -99,6 +120,30 @@ augroup hack234
     autocmd FocusLost * set transparency=212
   endif
 augroup END
+
+
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+
+
+" Clipboard
+if has('gui_running')
+    set clipboard=unnamed
+endif
 
 
 set tabstop=4
