@@ -143,7 +143,7 @@ if has('gui_running')
 
     " my settings below
     "let g:neocomplcache_manual_completion_start_length = 1
-    let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
+    "let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
 
 
