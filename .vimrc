@@ -95,8 +95,8 @@ nnoremap <C-up> :resize -2<cr>
 augroup hack234
   autocmd!
   if has('win32')
-    autocmd FocusGained * set transparency=240
-    autocmd FocusLost * set transparency=212
+    autocmd FocusGained * set transparency=255
+    autocmd FocusLost * set transparency=230
   endif
 augroup END
 
