@@ -165,8 +165,10 @@ nnoremap <C-right> :vertical resize +5<cr>
 nnoremap <C-down> :resize +2<cr>
 nnoremap <C-up> :resize -2<cr>
 
+" Ctrl+s: Reload .vimrc & .gvimrc
 nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
+" F7 : FullScreen (only works on Windows)
 nnoremap <F7> :call ToggleFullScreen()<CR>
 function! ToggleFullScreen()
   if &guioptions =~# 'C'
@@ -189,6 +191,7 @@ function! ToggleFullScreen()
   endif
 endfunction
 
+" transparent window when focus is out
 augroup hack234
   autocmd!
   if has('win32')
@@ -197,7 +200,7 @@ augroup hack234
   endif
 augroup END
 
-
+" <Space>cd : Change current directory to opened file
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -210,8 +213,6 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-
-" Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
