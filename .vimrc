@@ -42,6 +42,10 @@ NeoBundle 'surround.vim'
 " IM
 NeoBundle "fuenor/im_control.vim"
 
+" Color Theme
+NeoBundle 'altercation/vim-colors-solarized.git'
+
+
 filetype plugin indent on
 
 " vimfiler

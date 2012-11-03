@@ -2,11 +2,15 @@
 colorscheme desert
 
 if has('win32')
+    " Kaoriya Vimを想定
+
+    " UTF-8 モード
     source $VIMRUNTIME/delmenu.vim
     set langmenu=ja_jp.utf-8
     source $VIMRUNTIME/menu.vim
 
-    set guifont=Consolas:h12,Lucida_Console:h12:w5 guifontwide=MS_Gothic:h12
+    set guifont=Ricty:h12
+    "set guifont=Consolas:h12,Lucida_Console:h12:w5 guifontwide=MS_Gothic:h12
 
     " IM
     " 「日本語入力固定モード」の動作モード
@@ -14,7 +18,8 @@ if has('win32')
     " 「日本語入力固定モード」切替キー
     inoremap <silent> <C-j> <C-^><C-r>=IMState('FixMode')<CR>
 else
-    set guifont=Ubuntu\ Mono\ 12
+    set guifont=Ricty\ 12
+    "set guifont=Ubuntu\ Mono\ 12
     set lines=40 columns=120
 
     " IM
@@ -27,7 +32,4 @@ else
     set timeout timeoutlen=3000 ttimeoutlen=100
 endif
 
-
-"if has("gui_running")
-"endif
 
