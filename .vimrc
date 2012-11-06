@@ -42,6 +42,10 @@ NeoBundle 'surround.vim'
 " IM
 NeoBundle "fuenor/im_control.vim"
 
+" Color Theme
+NeoBundle 'altercation/vim-colors-solarized.git'
+
+
 filetype plugin indent on
 
 " vimfiler
@@ -136,12 +140,13 @@ if has('gui_running')
     smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
     " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
+    "if has('conceal')
+    "  set conceallevel=2 concealcursor=i
+    "endif
 
 
     " my settings below
+    let g:neosnippet#snippets_directory='~/.vim/snippets'
     "let g:neocomplcache_manual_completion_start_length = 1
     let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
@@ -161,8 +166,10 @@ nnoremap <C-right> :vertical resize +5<cr>
 nnoremap <C-down> :resize +2<cr>
 nnoremap <C-up> :resize -2<cr>
 
+" Ctrl+s: Reload .vimrc & .gvimrc
 nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
+" F7 : FullScreen (only works on Windows)
 nnoremap <F7> :call ToggleFullScreen()<CR>
 function! ToggleFullScreen()
   if &guioptions =~# 'C'
@@ -185,6 +192,7 @@ function! ToggleFullScreen()
   endif
 endfunction
 
+" transparent window when focus is out
 augroup hack234
   autocmd!
   if s:is_windows
@@ -193,7 +201,7 @@ augroup hack234
   endif
 augroup END
 
-
+" <Space>cd : Change current directory to opened file
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -206,8 +214,6 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-
-" Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
