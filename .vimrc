@@ -148,7 +148,7 @@ if has('gui_running')
     " my settings below
     let g:neosnippet#snippets_directory='~/.vim/snippets'
     "let g:neocomplcache_manual_completion_start_length = 1
- "let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
+    let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
 
 
@@ -195,7 +195,7 @@ endfunction
 " transparent window when focus is out
 augroup hack234
   autocmd!
-  if has('win32')
+  if s:is_windows
     autocmd FocusGained * set transparency=255
     autocmd FocusLost * set transparency=230
   endif
@@ -251,7 +251,7 @@ set wildmode=list:longest,full
 set number
 "set cmdheight=3
 
-if has('win32') && !has('gui_running')
+if s:is_windows && !has('gui_running')
     set encoding=cp932
 else
     set encoding=utf-8
