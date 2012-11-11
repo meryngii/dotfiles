@@ -216,7 +216,8 @@ function! s:ChangeCurrentDir(directory, bang)
 endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
-
+" <space>sudo : reopen using sudo
+nnoremap <silent> <space>sudo :e sudo:%<cr>
 
 " Clipboard
 if has('gui_running')
