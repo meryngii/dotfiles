@@ -11,7 +11,7 @@ set directory=~/.vim/swp
 set backup
 set backupdir=~/.vim/backup
 
-" NeoBundle's configuration
+" NeoBundle's configuration starts
 filetype off
 
 if has('vim_starting')
@@ -20,42 +20,41 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-" General
+" Thanks to Shougo-san
 NeoBundle "Shougo/vimproc"
 NeoBundle "Shougo/vimshell"
 NeoBundle "Shougo/unite.vim"
 NeoBundle "Shougo/vimfiler"
-" Completion
+" (Completion)
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neosnippet'
-"NeoBundle 'taichouchou2/vim-rsense'
+
+" File
+NeoBundle "sudo.vim"
 " Text
+NeoBundle "fuenor/im_control.vim"
 NeoBundle 'Align'
 NeoBundle 'surround.vim'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
-" Other
+" View
 NeoBundle 'thinca/vim-fontzoom'
-
-NeoBundle 'surround.vim'
-
-" IM
-NeoBundle "fuenor/im_control.vim"
-
-" Color Theme
+" Color theme
 NeoBundle 'altercation/vim-colors-solarized.git'
 
-NeoBundle 'sudo.vim'
+filetype plugin on
+filetype plugin indent off
+" NeoBundle's configuration ends
 
 
-filetype plugin indent on
-
-" vimfiler
+" VimFiler
 let g:vimfiler_as_default_explorer = 1
 "let g:vimfiler_edit_action = 'tabopen'
 nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
 
 if has('gui_running')
+    " default settings for neocomplcache & neosnippet
+    
     "-- neocomplcache --
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
@@ -150,9 +149,8 @@ if has('gui_running')
     " my settings below
     let g:neosnippet#snippets_directory='~/.vim/snippets'
     "let g:neocomplcache_manual_completion_start_length = 1
- "let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
+    let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
-
 
 " Align
 let g:Align_xstrlen = 3
@@ -197,7 +195,7 @@ endfunction
 " transparent window when focus is out
 augroup hack234
   autocmd!
-  if has('win32')
+  if s:is_windows
     autocmd FocusGained * set transparency=255
     autocmd FocusLost * set transparency=230
   endif
@@ -218,7 +216,8 @@ function! s:ChangeCurrentDir(directory, bang)
 endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
-
+" <space>sudo : reopen using sudo
+nnoremap <silent> <space>sudo :e sudo:%<cr>
 
 " Clipboard
 if has('gui_running')
@@ -236,37 +235,40 @@ set shiftwidth=4
 set autoindent
 set expandtab
 
+" Makefile prohibits using spaces instead of tab
+autocmd BufNewFile,BufRead Makefile  set noexpandtab
+
 " enable incremental search
 set incsearch
 " enable hilighting
 set hlsearch
 
 
-
-"set wildmode=list,full
-"When more than one match, list all matches and complete first match.
-
+" file name completion
 set wildmenu
 set wildmode=list:longest,full
 
 set number
-"set cmdheight=3
+set cmdheight=1
 
-if has('win32') && !has('gui_running')
+if s:is_windows && !has('gui_running')
     set encoding=cp932
 else
     set encoding=utf-8
 endif
 
+set fileencoding=utf-8
 set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
 
-" netrwは常にtree view
+autocmd BufNewFile *    set fileencoding=utf-8
+
+" tree view (for netrw)
+" but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
 
-" Dropbox
+" home directory is default
 if s:is_windows
     cd $HOME
-    "cd $HOME\My Documents\Dropbox
 else
     cd ~
 endif
