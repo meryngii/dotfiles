@@ -262,6 +262,11 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 
 autocmd BufNewFile *    set fileencoding=utf-8
 
+
+syntax on
+colorscheme desert
+
+
 " tree view (for netrw)
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
