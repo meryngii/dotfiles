@@ -5,7 +5,7 @@ set nocompatible
 
 let s:is_windows = has('win32') || has('win64')
 
-let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+let s:is_mac = !s:is_windows && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
 
 
