@@ -1,5 +1,10 @@
 
-colorscheme desert
+colorscheme jellybeans
+"syntax reset
+"let g:lucius_style='dark'
+"let g:lucius_contrast='high'
+"colorscheme lucius
+set guioptions-=T
 
 if has('win32')
     " Kaoriya Vimを想定

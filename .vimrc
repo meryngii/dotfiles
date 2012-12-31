@@ -45,6 +45,19 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'thinca/vim-fontzoom'
 " Color theme
 NeoBundle 'altercation/vim-colors-solarized.git'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'jnurmine/Zenburn'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'therubymug/vim-pyte'
+NeoBundle 'jeffreyiacono/vim-colors-wombat'
+
+NeoBundle 'ujihisa/unite-colorscheme'
+
+" Powerline
+NeoBundle 'Lokaltog/powerline'
+
+NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin on
 filetype plugin indent off
@@ -270,6 +283,9 @@ autocmd BufNewFile *    set fileencoding=utf-8
 syntax on
 colorscheme desert
 
+
+" Powerline
+source $HOME/.vim/bundle/powerline/powerline/ext/vim/powerline.vim
 
 " tree view (for netrw)
 " but netrw is replaced by VimFiler
