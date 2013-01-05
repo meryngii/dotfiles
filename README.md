@@ -27,3 +27,5 @@ Install vimproc (see also https://github.com/Shougo/vimproc) (UNIX) :
     cd dotfiles/.vim/bundle/vimproc
     make -f make_unix.mak
 
+Install 'Ricty for Powerline' font.
+
