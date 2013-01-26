@@ -57,7 +57,6 @@ NeoBundle 'jeffreyiacono/vim-colors-wombat'
 NeoBundle 'ujihisa/unite-colorscheme'
 
 " Powerline
-NeoBundleLazy 'Lokaltog/powerline'
 NeoBundle 'tpope/vim-fugitive'
 
 

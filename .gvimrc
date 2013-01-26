@@ -3,11 +3,6 @@ colorscheme jellybeans
 set guioptions-=T
 set guioptions-=m
 
-" Powerline
-NeoBundleSource 'powerline'
-"let g:Powerline_symbols = 'fancy'
-source $HOME/.vim/bundle/powerline/powerline/ext/vim/powerline.vim
-
 
 if has('win32')
     " Kaoriya Vimを想定
@@ -39,8 +34,4 @@ else
     " <ESC>押下後のIM切替開始までの反応が遅い場合はttimeoutlenを短く設定してみてください。
     set timeout timeoutlen=3000 ttimeoutlen=100
 endif
-
-
-
-
 
