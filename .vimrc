@@ -55,6 +55,7 @@ NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'jeffreyiacono/vim-colors-wombat'
 
 NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " Powerline
 NeoBundle 'tpope/vim-fugitive'
@@ -279,6 +280,11 @@ nnoremap <C-x> :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
 
+" Indent guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 1
+
 "--- Key Bindings ---
 nnoremap <C-left> :vertical resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
@@ -391,31 +397,61 @@ colorscheme desert
 set laststatus=2
 
 " ステータスラインの表示
-set statusline=%<     " 行が長すぎるときに切り詰める位置
-set statusline+=[%n]  " バッファ番号
-set statusline+=%m    " %m 修正フラグ
-set statusline+=%r    " %r 読み込み専用フラグ
-set statusline+=%h    " %h ヘルプバッファフラグ
-set statusline+=%w    " %w プレビューウィンドウフラグ
-set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
-set statusline+=%y    " バッファ内のファイルのタイプ
-set statusline+=\     " 空白スペース
-if winwidth(0) >= 130
-set statusline+=%F    " バッファ内のファイルのフルパス
-else
-set statusline+=%t    " ファイル名のみ
-endif
-set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%1l   " 何行目にカーソルがあるか
+set statusline=
+set statusline+=[#%n]  " バッファ番号
+set statusline+=%m     " %m 修正フラグ
+set statusline+=%r     " %r 読み込み専用フラグ
+set statusline+=%<     " 行が長すぎるときに切り詰める位置
+set statusline+=%{fugitive#statusline()} " Gitのブランチ名を表示
+set statusline+=%h     " %h ヘルプバッファフラグ
+set statusline+=%w     " %w プレビューウィンドウフラグ
+set statusline+=\ %{&filetype}\ \|\  
+set statusline+=%{(&fenc!=''?&fenc:&enc)}\:%{&ff}\  " fencとffを表示
+set statusline+=%#StatusLineFile#\ %F " バッファ内のファイルのフルパス
+set statusline+=%=     " 左寄せ項目と右寄せ項目の区切り
+set statusline+=\ %*\  " 空白スペース2個
+set statusline+=%2cc   " 何列目にカーソルがあるか
+set statusline+=:%l    " 何行目にカーソルがあるか
 set statusline+=/
-set statusline+=%L    " バッファ内の総行数
-set statusline+=,
-set statusline+=%c    " 何列目にカーソルがあるか
-set statusline+=%V    " 画面上の何列目にカーソルがあるか
-set statusline+=\ \   " 空白スペース2個
-set statusline+=%P    " ファイル内の何％の位置にあるか
+set statusline+=%LL    " バッファ内の総行数
+
+" 挿入モードでステータスラインをハイライト
+if !exists('g:hi_insert')
+  let g:hi_insert = 'highlight StatusLine guifg=White guibg=#775566 gui=none ctermfg=White ctermbg=DarkCyan cterm=none'
+endif
+
+if has('syntax')
+  augroup InsertHook
+    autocmd!
+    autocmd InsertEnter * call s:StatusLine('Enter')
+    autocmd InsertLeave * call s:StatusLine('Leave')
+  augroup END
+endif
+
+let s:slhlcmd = ''
+function! s:StatusLine(mode)
+  if a:mode == 'Enter'
+    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
+    silent exec g:hi_insert
+  else
+    highlight clear StatusLine
+    silent exec s:slhlcmd
+  endif
+endfunction
+
+function! s:GetHighlight(hi)
+  redir => hl
+  exec 'highlight '.a:hi
+  redir END
+  let hl = substitute(hl, '[\r\n]', '', 'g')
+  let hl = substitute(hl, 'xxx', '', '')
+  return hl
+endfunction
+
+set cursorline " カーソル行をハイライト
+
+set list
+set listchars=tab:▸\ ,eol:¬
 
 set hidden " multiple editing
 
