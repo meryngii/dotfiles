@@ -35,6 +35,9 @@ NeoBundle "Shougo/vinarise"
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neosnippet'
 
+" unite.vim
+NeoBundle "h1mesuke/unite-outline"
+
 " File
 NeoBundle "sudo.vim"
 " Text
@@ -169,7 +172,6 @@ endif
 
 " VimFiler
 let g:vimfiler_as_default_explorer = 1 " replace netrw
-nnoremap <F2> :VimFiler -buffer-name=explorer -no-quit<Cr>
 "let g:vimfiler_edit_action = 'tabopen' " Edit file by tabedit.
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
 " Like Textmate icons.
@@ -181,27 +183,40 @@ let g:vimfiler_marked_file_icon = '*'
 " Windows only and require latest vimproc.
 let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 
+nnoremap <silent> <Space>exp  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
+nnoremap <silent> <Space>f  :VimFilerCreate -quit<CR>
+
+autocmd FileType vimfiler call s:vimfiler_my_settings()
+function! s:vimfiler_my_settings()
+    nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
+endfunction
+
 
 " Unite.vim
 nnoremap    [unite]   <Nop>
 nmap    f [unite]
 
+nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]f  :Unite buffer file file/new file_mru bookmark<CR>
+nnoremap <silent> [unite]u  :Unite source<CR>
+nnoremap <silent> [unite]g  :Unite vimgrep<CR>
+
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 \ -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-\ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+"nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
+"\ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
 nnoremap <silent> [unite]r  :<C-u>Unite
 \ -buffer-name=register register<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-nnoremap <silent> [unite]f
-\ :<C-u>Unite -buffer-name=resume resume<CR>
+"nnoremap <silent> [unite]f
+"\ :<C-u>Unite -buffer-name=resume resume<CR>
 nnoremap <silent> [unite]d
 \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
 nnoremap <silent> [unite]ma
 \ :<C-u>Unite mapping<CR>
 nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
-nnoremap  [unite]f  :<C-u>Unite source<CR>
+"nnoremap  [unite]f  :<C-u>Unite source<CR>
 
 nnoremap <silent> [unite]s
         \ :<C-u>Unite -buffer-name=files -no-split
@@ -209,7 +224,7 @@ nnoremap <silent> [unite]s
         \ file_rec:! file file/new file_mru<CR>
 
 " Start insert.
-"let g:unite_enable_start_insert = 1
+let g:unite_enable_start_insert = 1
 "let g:unite_enable_short_source_names = 1
 
 autocmd FileType unite call s:unite_my_settings()
@@ -276,7 +291,7 @@ endif
 let g:Align_xstrlen = 3
 
 " VimShell
-nnoremap <C-x> :VimShell -split<cr>
+nnoremap <silent> <Space>sh :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
 
@@ -351,6 +366,11 @@ nnoremap <silent> <space>sudo :e sudo:%<cr>
 if has('gui_running')
     set clipboard=unnamed
 endif
+
+" 
+nmap <F1> <nop>
+imap <F1> <nop>
+
 
 
 set tabstop=4
