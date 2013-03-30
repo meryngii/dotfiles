@@ -36,7 +36,8 @@ NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neosnippet'
 
 " unite.vim
-NeoBundle "h1mesuke/unite-outline"
+"NeoBundle "h1mesuke/unite-outline"
+NeoBundle "meryngii/unite-outline"
 
 " File
 NeoBundle "sudo.vim"
@@ -197,7 +198,7 @@ nnoremap    [unite]   <Nop>
 nmap    f [unite]
 
 nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f  :Unite buffer file file/new file_mru bookmark<CR>
+nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
 nnoremap <silent> [unite]u  :Unite source<CR>
 nnoremap <silent> [unite]g  :Unite vimgrep<CR>
 
@@ -486,4 +487,6 @@ if s:is_windows
 else
     cd ~
 endif
+
+"source $HOME/.vim/unite-outline-lua.vim
 
