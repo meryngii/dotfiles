@@ -65,6 +65,13 @@ NeoBundle 'ujihisa/unite-colorscheme'
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
 
+" File-type
+"NeoBundle 'mkd.vim'
+
+" Quick-run
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tyru/open-browser.vim'
+
 
 filetype plugin on
 filetype plugin indent off
@@ -297,10 +304,14 @@ nnoremap <silent> <Space>sh :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
 
-" Indent guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 1
+" QuickRun
+let g:quickrun_config = {}
+let g:quickrun_config['markdown'] = {
+      \ 'outputter': 'browser',
+      \ 'args' : '--standalone --mathml'
+      \ }
+" <Space>run : QuickRun
+nnoremap <silent> <Space>run :QuickRun<CR>
 
 "--- Key Bindings ---
 " Ctrl + Dir : Resize window
@@ -381,6 +392,12 @@ set expandtab
 
 " Makefile prohibits using spaces instead of tab
 autocmd BufNewFile,BufRead Makefile  set noexpandtab
+
+" Markdown
+autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
+autocmd BufRead,BufNewFile *.md  set filetype=markdown
+
+
 
 " enable incremental search
 set incsearch
