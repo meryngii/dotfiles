@@ -36,7 +36,7 @@ NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neosnippet'
 
 " unite sources
-"NeoBundle "h1mesuke/unite-outline"
+"NeoBundle "Shougo/unite-outline"
 NeoBundle "meryngii/unite-outline"
 NeoBundle "osyo-manga/unite-quickfix"
 NeoBundle "tsukkee/unite-tag"
@@ -307,6 +307,7 @@ let g:vimshell_right_prompt = 'getcwd()'
 " QuickRun
 let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
+      \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
       \ 'args' : '--standalone --mathml'
       \ }
