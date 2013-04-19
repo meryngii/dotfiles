@@ -35,20 +35,22 @@ NeoBundle "Shougo/vinarise"
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neosnippet'
 
-" unite.vim
+" unite sources
 "NeoBundle "h1mesuke/unite-outline"
 NeoBundle "meryngii/unite-outline"
+NeoBundle "osyo-manga/unite-quickfix"
+NeoBundle "tsukkee/unite-tag"
 
 " File
 NeoBundle "sudo.vim"
 " Text
-"NeoBundle "fuenor/im_control.vim"
 NeoBundle 'Align'
 NeoBundle 'surround.vim'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
 " View
 NeoBundle 'thinca/vim-fontzoom'
+NeoBundle 'thinca/vim-quickrun'
 " Color theme
 NeoBundle 'altercation/vim-colors-solarized.git'
 NeoBundle 'tomasr/molokai'
@@ -59,9 +61,8 @@ NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'jeffreyiacono/vim-colors-wombat'
 
 NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'nathanaelkane/vim-indent-guides'
 
-" Powerline
+" External Tools
 NeoBundle 'tpope/vim-fugitive'
 
 
@@ -302,12 +303,15 @@ let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 1
 
 "--- Key Bindings ---
-nnoremap <C-left> :vertical resize -5<cr>
-nnoremap <C-right> :vertical resize +5<cr>
-nnoremap <C-down> :resize +2<cr>
-nnoremap <C-up> :resize -2<cr>
+" Ctrl + Dir : Resize window
+nnoremap <C-left>   :vertical resize -5<cr>
+nnoremap <C-right>  :vertical resize +5<cr>
+nnoremap <C-down>   :resize +2<cr>
+nnoremap <C-up>     :resize -2<cr>
 
-
+" Alt + Up/Down : Change transparency
+nnoremap <A-up>     :set transparency+=10<cr>
+nnoremap <A-down>   :set transparency-=10<cr>
 
 
 " Ctrl+s: Reload .vimrc & .gvimrc
@@ -335,15 +339,6 @@ function! ToggleFullScreen()
     simalt ~x
   endif
 endfunction
-
-" transparent window when focus is out
-augroup hack234
-  autocmd!
-  if s:is_windows
-    autocmd FocusGained * set transparency=255
-    autocmd FocusLost * set transparency=230
-  endif
-augroup END
 
 " <Space>cd : Change current directory to opened file
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
@@ -488,5 +483,4 @@ else
     cd ~
 endif
 
-"source $HOME/.vim/unite-outline-lua.vim
 
