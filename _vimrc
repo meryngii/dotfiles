@@ -309,7 +309,7 @@ let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
-      \ 'args' : '--standalone --mathml'
+      \ 'args' : '--standalone --mathjax'
       \ }
 " <Space>run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
