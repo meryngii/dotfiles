@@ -1,3 +1,7 @@
+[user]
+    name = meryngii
+    email = meryngii+git@gmail.com
+
 [color]
     ui = auto
 
@@ -6,7 +10,7 @@
     st = status
     di = diff
     ls = ls-files -t
-    ci = commit -m
+    ci = commit -a
     co = checkout
     l = log --graph -n 20 --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
     su = submodule update
