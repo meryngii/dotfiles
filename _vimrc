@@ -309,7 +309,7 @@ let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
-      \ 'args' : '--standalone --mathml'
+      \ 'args' : '--standalone --mathjax'
       \ }
 " <Space>run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
@@ -398,6 +398,9 @@ autocmd BufNewFile,BufRead Makefile  set noexpandtab
 autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
 autocmd BufRead,BufNewFile *.md  set filetype=markdown
 
+" Configuration Files
+autocmd BufRead,BufNewFile _zshrc   set filetype=zsh
+autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
 
 
 " enable incremental search
