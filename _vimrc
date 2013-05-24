@@ -75,7 +75,11 @@ NeoBundle 'tyru/open-browser.vim'
 
 filetype plugin on
 filetype plugin indent off
+
+
 " NeoBundle's configuration ends
+
+" NeoComplCache & NeoSnippet "{{{
 
 if has('gui_running')
     " default settings for neocomplcache & neosnippet
@@ -177,9 +181,9 @@ if has('gui_running')
     let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
 
+" }}}
 
-
-" VimFiler
+" VimFiler {{{
 let g:vimfiler_as_default_explorer = 1 " replace netrw
 "let g:vimfiler_edit_action = 'tabopen' " Edit file by tabedit.
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
@@ -199,15 +203,15 @@ autocmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
 endfunction
+" }}}
 
-
-" Unite.vim
+" Unite.vim {{{
 nnoremap    [unite]   <Nop>
-nmap    f [unite]
+nmap    <Space>u [unite]
 
 nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
-nnoremap <silent> [unite]u  :Unite source<CR>
+nnoremap <silent> [unite]u  :Unite buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]s  :Unite source<CR>
 nnoremap <silent> [unite]g  :Unite vimgrep<CR>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
@@ -295,6 +299,7 @@ if executable('ack-grep')
   " let g:unite_source_grep_recursive_opt = ''
 endif
 
+"}}}
 
 " Align
 let g:Align_xstrlen = 3
@@ -304,7 +309,7 @@ nnoremap <silent> <Space>sh :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
 
-" QuickRun
+" QuickRun {{{
 let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
@@ -313,6 +318,7 @@ let g:quickrun_config['markdown'] = {
       \ }
 " <Space>run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
+" }}}
 
 "--- Key Bindings ---
 " Ctrl + Dir : Resize window
@@ -375,11 +381,46 @@ if has('gui_running')
     set clipboard=unnamed
 endif
 
-" 
+" Disable F1's help to prevent mistype
 nmap <F1> <nop>
 imap <F1> <nop>
 
+" Folding {{{
+set foldenable
+set foldmethod=marker
 
+nnoremap    [fold]   <Nop>
+nmap    <Space>f [fold]
+
+" move over foldings
+nnoremap <Space>j    zj
+nnoremap <Space>k    zk
+
+" toggle all foldings
+nnoremap [fold]f    zA
+" show [o]nly current folding
+nnoremap [fold]o    zMzv
+" [h]ide all foldings
+nnoremap [fold]h    zM
+" [d]elete folding
+nnoremap [fold]d    zd
+" [m]ake folding
+noremap [fold]m    zf
+" toggle
+nnoremap [fold]a    za
+
+"noremap ;j zj
+"noremap ;k zk
+"noremap ;n ]z
+"noremap ;p [z
+"noremap ;h zc
+"noremap ;l zo
+"noremap ;a za
+"noremap ;m zM
+"noremap ;i zMzv
+"noremap ;r zR
+"noremap ;f zf
+" }}}
 
 set tabstop=4
 "tabが押されたときに実際に挿入される空白の文字数
@@ -402,19 +443,20 @@ autocmd BufRead,BufNewFile *.md  set filetype=markdown
 autocmd BufRead,BufNewFile _zshrc   set filetype=zsh
 autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
 
-
 " enable incremental search
 set incsearch
 " enable hilighting
 set hlsearch
 
 
-" file name completion
+" File name completion
 set wildmenu
 set wildmode=list:longest,full
 
 set number
 set cmdheight=1
+
+" File Encodings {{{
 
 if s:is_windows && !has('gui_running')
     set encoding=cp932
@@ -422,9 +464,23 @@ else
     set encoding=utf-8
 endif
 
-" File Encodings
 set fileencoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
+set fileencodings=utf-8,ucs-bom,iso-2022-jp,cp932
+
+" Commands to reopen with the specified character code "{{{
+command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
+command! -bang -bar -complete=file -nargs=? Iso2022jp edit<bang> ++enc=iso-2022-jp <args>
+command! -bang -bar -complete=file -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
+command! -bang -bar -complete=file -nargs=? Euc edit<bang> ++enc=euc-jp <args>
+command! -bang -bar -complete=file -nargs=? Utf16 edit<bang> ++enc=ucs-2le <args>
+command! -bang -bar -complete=file -nargs=? Utf16be edit<bang> ++enc=ucs-2 <args>
+
+command! -bang -bar -complete=file -nargs=? Jis  Iso2022jp<bang> <args>
+command! -bang -bar -complete=file -nargs=? Sjis  Cp932<bang> <args>
+command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
+"}}}
+
+" }}}
 
 autocmd BufNewFile *    set fileencoding=utf-8
 
@@ -447,10 +503,10 @@ set statusline+=%{(&fenc!=''?&fenc:&enc)}\:%{&ff}\  " fencとffを表示
 set statusline+=%#StatusLineFile#\ %F " バッファ内のファイルのフルパス
 set statusline+=%=     " 左寄せ項目と右寄せ項目の区切り
 set statusline+=\ %*\  " 空白スペース2個
-set statusline+=%2cc   " 何列目にカーソルがあるか
-set statusline+=:%l    " 何行目にカーソルがあるか
+set statusline+=C%2c   " 何列目にカーソルがあるか
+set statusline+=:L%l    " 何行目にカーソルがあるか
 set statusline+=/
-set statusline+=%LL    " バッファ内の総行数
+set statusline+=%L    " バッファ内の総行数
 
 " 挿入モードでステータスラインをハイライト
 if !exists('g:hi_insert')

@@ -1,31 +1,24 @@
 dotfiles
 ========
 
-Installation
------
+Installation (UNIX)
+-------------------
 
-Set up Git.
+1. Set up Git and GVIM.
 
-Run the commands below on the terminal (UNIX):
+	sudo apt-get install git vim-gnome
 
-    git clone https://github.com/meryngii/dotfiles.git
-    cd dotfiles && git submodule init && git submodule update
-    mkdir .vim/{backup,swp}
-    cd ~ && ln -s dotfiles/{.vim,.vimrc,.gvimrc,.vimshrc} .
-
-(Windows) (Required to start cmd.exe as a administrator):
+2. Run commands below on the terminal.
 
     git clone https://github.com/meryngii/dotfiles.git
-    cd dotfiles && git submodule init && git submodule update
-    mkdir .vim\backup && mkdir .vim\swp
-    cd ..\ && mklink /d .vim dotfiles\.vim && mklink .vimrc dotfiles\.vimrc && mklink .gvimrc dotfiles\.gvimrc && mklink .vimshrc dotfiles\.vimshrc
+    cd dotfiles
+    ./install.sh
 
-Run GVIM and type `:NeoBundleInstall`
+3. Run GVIM  and type `:NeoBundleInstall`.
 
-Install vimproc (see also https://github.com/Shougo/vimproc) (UNIX) :
+4. Back to the terminal.
 
-    cd dotfiles/.vim/bundle/vimproc
-    make -f make_unix.mak
+	./install2.sh
 
-Install 'Ricty' font.
+5. Install 'Ricty' font if necessary.
 
