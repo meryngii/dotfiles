@@ -3,9 +3,10 @@ if %HOME%=='' set %HOME%=%HOMEDRIVE%%HOMEPATH%
 
 git submodule init && git submodule update
 
-mkdir .vim\backup .vim\swp
+mkdir _vim\backup _vim\swp
 
-mklink /d %HOME%\.vim     _vim
-mklink    %HOME%\.vimrc   _vimrc
-mklink    %HOME%\.gvimrc  _gvimrc
-mklink    %HOME%\.vimshrc _vimshrc
+mklink /d %HOME%\.vim     dotfiles\_vim
+mklink    %HOME%\.vimrc   dotfiles\_vimrc
+mklink    %HOME%\.gvimrc  dotfiles\_gvimrc
+mklink    %HOME%\.vimshrc dotfiles\_vimshrc
+
