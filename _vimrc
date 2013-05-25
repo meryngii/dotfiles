@@ -1,5 +1,7 @@
 " *** .vimrc for meryngii ***
 
+" Initial setup {{{
+
 " iMproved!
 set nocompatible
 
@@ -7,15 +9,16 @@ let s:is_windows = has('win32') || has('win64')
 
 let s:is_mac = !s:is_windows && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
+" }}}
 
-
-" swap & backup
+" swap & backup {{{
 set swapfile
 set directory=~/.vim/swp
 set backup
 set backupdir=~/.vim/backup
+" }}}
 
-" NeoBundle's configuration starts
+" NeoBundle and Loaded plugins {{{
 filetype off
 
 if has('vim_starting')
@@ -23,7 +26,6 @@ if has('vim_starting')
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
-
 
 " Thanks to Shougo-san
 NeoBundle "Shougo/vimproc"
@@ -75,7 +77,17 @@ NeoBundle 'tyru/open-browser.vim'
 
 filetype plugin on
 filetype plugin indent off
-" NeoBundle's configuration ends
+
+" }}}
+
+" [Space] Smart space mapping. {{{
+nmap  <Space>   [Space]
+xmap  <Space>   [Space]
+nnoremap  [Space]   <Nop>
+xnoremap  [Space]   <Nop>
+" }}}
+
+" NeoComplCache & NeoSnippet "{{{
 
 if has('gui_running')
     " default settings for neocomplcache & neosnippet
@@ -177,9 +189,9 @@ if has('gui_running')
     let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
 
+" }}}
 
-
-" VimFiler
+" VimFiler {{{
 let g:vimfiler_as_default_explorer = 1 " replace netrw
 "let g:vimfiler_edit_action = 'tabopen' " Edit file by tabedit.
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
@@ -192,22 +204,22 @@ let g:vimfiler_marked_file_icon = '*'
 " Windows only and require latest vimproc.
 let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 
-nnoremap <silent> <Space>exp  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
-nnoremap <silent> <Space>f  :VimFilerCreate -quit<CR>
+nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
+"nnoremap <silent> [Space]c  :VimFilerCreate -quit<CR>
 
 autocmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
 endfunction
+" }}}
 
-
-" Unite.vim
+" Unite.vim {{{
 nnoremap    [unite]   <Nop>
-nmap    f [unite]
+nmap    [Space]u [unite]
 
 nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
-nnoremap <silent> [unite]u  :Unite source<CR>
+nnoremap <silent> [unite]u  :Unite buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]s  :Unite source<CR>
 nnoremap <silent> [unite]g  :Unite vimgrep<CR>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
@@ -295,41 +307,51 @@ if executable('ack-grep')
   " let g:unite_source_grep_recursive_opt = ''
 endif
 
+"}}}
 
-" Align
+" Align {{{
 let g:Align_xstrlen = 3
+" }}}
 
-" VimShell
-nnoremap <silent> <Space>sh :VimShell -split<cr>
+" VimShell {{{
+nnoremap <silent> [Space]sh :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
+" }}}
 
-" QuickRun
+" QuickRun {{{
 let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
-      \ 'args' : '--standalone --mathml'
+      \ 'args' : '--standalone --mathjax'
       \ }
-" <Space>run : QuickRun
+" [Space]run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
+" }}}
 
-"--- Key Bindings ---
-" Ctrl + Dir : Resize window
+" Key Bindings {{{
+
+" Ctrl + Arrow : Resize window {{{
 nnoremap <C-left>   :vertical resize -5<cr>
 nnoremap <C-right>  :vertical resize +5<cr>
 nnoremap <C-down>   :resize +2<cr>
 nnoremap <C-up>     :resize -2<cr>
+" }}}
 
-" Alt + Up/Down : Change transparency
+" Alt + Up/Down : Change transparency {{{
 nnoremap <A-up>     :set transparency+=10<cr>
 nnoremap <A-down>   :set transparency-=10<cr>
-
+" }}}
 
 " Ctrl+s: Reload .vimrc & .gvimrc
 nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
-" F7 : FullScreen (only works on Windows)
+" Disable F1's help to prevent mistype
+nmap <F1> <nop>
+imap <F1> <nop>
+
+" F7 : FullScreen (only works on Windows) {{{
 nnoremap <F7> :call ToggleFullScreen()<CR>
 function! ToggleFullScreen()
   if &guioptions =~# 'C'
@@ -351,8 +373,10 @@ function! ToggleFullScreen()
     simalt ~x
   endif
 endfunction
+" }}}
 
-" <Space>cd : Change current directory to opened file
+" [Space]cd  {{{
+" Move to the directory of the current buffer.
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -365,22 +389,57 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
+nnoremap <silent> [Space]cd     :<C-u>CD<CR>
+" }}}
 
 " <space>sudo : reopen using sudo
-nnoremap <silent> <space>sudo :e sudo:%<cr>
+nnoremap <silent> [Space]sudo   :e sudo:%<cr>
+
+" }}}
 
 " Clipboard
 if has('gui_running')
     set clipboard=unnamed
 endif
 
-" 
-nmap <F1> <nop>
-imap <F1> <nop>
+" Folding {{{
+set foldenable
+set foldmethod=marker
 
+nnoremap    [fold]   <Nop>
+nmap    [Space]f [fold]
 
+" move over foldings
+nnoremap [Space]j    zj
+nnoremap [Space]k    zk
 
+" toggle all foldings
+nnoremap [fold]f    zA
+" show [o]nly current folding
+nnoremap [fold]o    zMzv
+" [h]ide all foldings
+nnoremap [fold]h    zM
+" [d]elete folding
+nnoremap [fold]d    zd
+" [m]ake folding
+noremap [fold]m    zf
+" toggle
+nnoremap [fold]a    za
+
+"noremap ;j zj
+"noremap ;k zk
+"noremap ;n ]z
+"noremap ;p [z
+"noremap ;h zc
+"noremap ;l zo
+"noremap ;a za
+"noremap ;m zM
+"noremap ;i zMzv
+"noremap ;r zR
+"noremap ;f zf
+" }}}
+
+" Indent {{{
 set tabstop=4
 "tabが押されたときに実際に挿入される空白の文字数
 set softtabstop=4
@@ -390,6 +449,9 @@ set shiftwidth=4
 
 set autoindent
 set expandtab
+" }}}
+
+" File Type {{{
 
 " Makefile prohibits using spaces instead of tab
 autocmd BufNewFile,BufRead Makefile  set noexpandtab
@@ -398,20 +460,26 @@ autocmd BufNewFile,BufRead Makefile  set noexpandtab
 autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
 autocmd BufRead,BufNewFile *.md  set filetype=markdown
 
+" Configuration Files
+autocmd BufRead,BufNewFile _zshrc   set filetype=zsh
+autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
 
+" }}}
 
-" enable incremental search
+" Enable incremental search.
 set incsearch
-" enable hilighting
+" Enable highlighting when searching.
 set hlsearch
 
 
-" file name completion
+" File name completion
 set wildmenu
 set wildmode=list:longest,full
 
 set number
 set cmdheight=1
+
+" File Encodings {{{
 
 if s:is_windows && !has('gui_running')
     set encoding=cp932
@@ -419,16 +487,34 @@ else
     set encoding=utf-8
 endif
 
-" File Encodings
 set fileencoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
+set fileencodings=utf-8,ucs-bom,iso-2022-jp,cp932
 
+" Create a new buffer with UTF-8.
 autocmd BufNewFile *    set fileencoding=utf-8
 
+" Commands to reopen with the specified character code "{{{
+command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
+command! -bang -bar -complete=file -nargs=? Iso2022jp edit<bang> ++enc=iso-2022-jp <args>
+command! -bang -bar -complete=file -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
+command! -bang -bar -complete=file -nargs=? Euc edit<bang> ++enc=euc-jp <args>
+command! -bang -bar -complete=file -nargs=? Utf16 edit<bang> ++enc=ucs-2le <args>
+command! -bang -bar -complete=file -nargs=? Utf16be edit<bang> ++enc=ucs-2 <args>
 
+command! -bang -bar -complete=file -nargs=? Jis  Iso2022jp<bang> <args>
+command! -bang -bar -complete=file -nargs=? Sjis  Cp932<bang> <args>
+command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
+"}}}
+
+" }}}
+
+" Colorscheme{{{
 syntax on
 colorscheme desert
 set laststatus=2
+" }}}
+
+" Status Line {{{
 
 " ステータスラインの表示
 set statusline=
@@ -444,10 +530,10 @@ set statusline+=%{(&fenc!=''?&fenc:&enc)}\:%{&ff}\  " fencとffを表示
 set statusline+=%#StatusLineFile#\ %F " バッファ内のファイルのフルパス
 set statusline+=%=     " 左寄せ項目と右寄せ項目の区切り
 set statusline+=\ %*\  " 空白スペース2個
-set statusline+=%2cc   " 何列目にカーソルがあるか
-set statusline+=:%l    " 何行目にカーソルがあるか
+set statusline+=C%2c   " 何列目にカーソルがあるか
+set statusline+=:L%l    " 何行目にカーソルがあるか
 set statusline+=/
-set statusline+=%LL    " バッファ内の総行数
+set statusline+=%L    " バッファ内の総行数
 
 " 挿入モードでステータスラインをハイライト
 if !exists('g:hi_insert')
@@ -482,12 +568,16 @@ function! s:GetHighlight(hi)
   return hl
 endfunction
 
-set cursorline " カーソル行をハイライト
+" }}}
+
+" Highlight current line.
+set cursorline
 
 set list
 set listchars=tab:▸\ ,eol:¬
 
-set hidden " multiple editing
+" Enable hidden buffers.
+set hidden
 
 
 " tree view (for netrw)
