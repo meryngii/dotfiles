@@ -218,7 +218,7 @@ nnoremap    [unite]   <Nop>
 nmap    [Space]u [unite]
 
 nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]u  :Unite buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
 nnoremap <silent> [unite]s  :Unite source<CR>
 nnoremap <silent> [unite]g  :Unite vimgrep<CR>
 
@@ -229,8 +229,8 @@ nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 nnoremap <silent> [unite]r  :<C-u>Unite
 \ -buffer-name=register register<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-"nnoremap <silent> [unite]f
-"\ :<C-u>Unite -buffer-name=resume resume<CR>
+nnoremap <silent> [unite]u
+\ :<C-u>Unite -buffer-name=resume resume<CR>
 nnoremap <silent> [unite]d
 \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
 nnoremap <silent> [unite]ma
@@ -324,7 +324,7 @@ let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
-      \ 'args' : '--standalone --mathjax'
+      \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
 " [Space]run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
