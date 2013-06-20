@@ -579,6 +579,9 @@ set listchars=tab:▸\ ,eol:¬
 " Enable hidden buffers.
 set hidden
 
+" Continue visual mode.
+vnoremap <silent> > >gv
+vnoremap <silent> < <gv
 
 " tree view (for netrw)
 " but netrw is replaced by VimFiler
