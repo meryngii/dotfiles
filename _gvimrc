@@ -1,4 +1,9 @@
 
+let s:is_windows = has('win32') || has('win64')
+
+let s:is_mac = !s:is_windows && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
+
+
 let g:jellybeans_background_color = "000000"
 
 if !exists("g:jellybeans_use_lowcolor_black") || g:jellybeans_use_lowcolor_black
@@ -46,7 +51,8 @@ set guioptions-=l
 set guioptions-=R
 set guioptions-=r
 
-if has('win32')
+"if has('win32')
+if s:is_windows
     " Kaoriya Vimを想定
 
     " UTF-8 モード
@@ -62,6 +68,8 @@ if has('win32')
     "let IM_CtrlMode = 4
     " 「日本語入力固定モード」切替キー
     "inoremap <silent> <C-j> <C-^><C-r>=IMState('FixMode')<CR>
+elseif s:is_mac
+    set guifont=Monaco:h13
 else
     set guifont=Ricty\ 12
     "set guifont=Ubuntu\ Mono\ 12
