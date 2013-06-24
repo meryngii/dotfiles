@@ -85,3 +85,6 @@ else
     "set timeout timeoutlen=3000 ttimeoutlen=100
 endif
 
+
+set vb t_vb=
+
