@@ -326,7 +326,7 @@ let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
-      \ 'args' : '--standalone --mathjax'
+      \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
 " [Space]run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
@@ -528,8 +528,6 @@ endif
 " Disable beep.
 set vb t_vb=
 
-" }}}
-
 
 " Colorscheme{{{
 syntax on
@@ -593,10 +591,26 @@ endfunction
 
 " }}}
 
+
+" Highlight current line.
+set cursorline
+
+set list
+set listchars=tab:▸\ ,eol:¬
+
+" Enable hidden buffers.
+set hidden
+
+" Continue visual mode.
+vnoremap <silent> > >gv
+vnoremap <silent> < <gv
+
 " tree view (for netrw) {{{
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
 "}}}
+
+" }}}
 
 " Default directory to HOME {{{
 if s:is_windows
