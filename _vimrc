@@ -74,6 +74,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tyru/open-browser.vim'
 
+" Folding
+NeoBundle 'LeafCage/foldCC'
 
 filetype plugin on
 filetype plugin indent off
@@ -218,9 +220,9 @@ nnoremap    [unite]   <Nop>
 nmap    [Space]u [unite]
 
 nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]u  :Unite buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
 nnoremap <silent> [unite]s  :Unite source<CR>
-nnoremap <silent> [unite]g  :Unite vimgrep<CR>
+nnoremap <silent> [unite]g  :Unite vimgrep -auto-preview -no-quit -resume<CR>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 \ -buffer-name=files buffer file_mru bookmark file<CR>
@@ -229,8 +231,8 @@ nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 nnoremap <silent> [unite]r  :<C-u>Unite
 \ -buffer-name=register register<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-"nnoremap <silent> [unite]f
-"\ :<C-u>Unite -buffer-name=resume resume<CR>
+nnoremap <silent> [unite]u
+\ :<C-u>Unite -buffer-name=resume resume<CR>
 nnoremap <silent> [unite]d
 \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
 nnoremap <silent> [unite]ma
@@ -397,47 +399,38 @@ nnoremap <silent> [Space]sudo   :e sudo:%<cr>
 
 " }}}
 
-" Clipboard
-if has('gui_running')
-    set clipboard=unnamed
-endif
-
 " Folding {{{
 set foldenable
 set foldmethod=marker
+set commentstring=%s
+set foldtext=FoldCCtext()
 
-nnoremap    [fold]   <Nop>
+noremap [fold]     <Nop>
 nmap    [Space]f [fold]
 
 " move over foldings
-nnoremap [Space]j    zj
-nnoremap [Space]k    zk
+noremap [Space]j    zj
+noremap [space]k    zk
 
-" toggle all foldings
-nnoremap [fold]f    zA
-" show [o]nly current folding
-nnoremap [fold]o    zMzv
-" [h]ide all foldings
-nnoremap [fold]h    zM
-" [d]elete folding
-nnoremap [fold]d    zd
-" [m]ake folding
-noremap [fold]m    zf
 " toggle
-nnoremap [fold]a    za
+noremap [fold]a    za
+" [h]ide all foldings
+noremap [fold]h    zM
+" [s]how all foldings
+noremap [fold]s    zR
+" show only current folding
+noremap [fold]i    zMzv
+" make [f]olding
+noremap [fold]f    zf
+" [d]elete folding
+noremap [fold]d    zd
 
-"noremap ;j zj
-"noremap ;k zk
-"noremap ;n ]z
-"noremap ;p [z
-"noremap ;h zc
-"noremap ;l zo
-"noremap ;a za
-"noremap ;m zM
-"noremap ;i zMzv
-"noremap ;r zR
-"noremap ;f zf
-" }}}
+"noremap [fold]u :<C-u>Unite outline:foldings<CR>
+noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
+
+autocmd BufRead,BufNewFile .lua _vimrc  setlocal commentstring=--%s
+
+"}}}
 
 " Indent {{{
 set tabstop=4
@@ -466,21 +459,7 @@ autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
 
 " }}}
 
-" Enable incremental search.
-set incsearch
-" Enable highlighting when searching.
-set hlsearch
-
-
-" File name completion
-set wildmenu
-set wildmode=list:longest,full
-
-set number
-set cmdheight=1
-
 " File Encodings {{{
-
 if s:is_windows && !has('gui_running')
     set encoding=cp932
 else
@@ -507,6 +486,50 @@ command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
 "}}}
 
 " }}}
+
+" Basic Settings {{{
+
+" Searching "{{{{
+
+" Enable incremental search.
+set incsearch
+" Enable highlighting when searching.
+set hlsearch
+
+" }}}
+
+" File name completion
+set wildmenu
+set wildmode=list:longest,full
+
+" Shows line number.
+set number
+
+" Sets the height of command line.
+set cmdheight=1
+
+" Highlights current line.
+set cursorline
+
+set list
+set listchars=tab:▸\ ,eol:¬
+
+" Enable backspace delete indent and newline.
+set backspace=indent,eol,start
+
+" Enable hidden buffers.
+set hidden
+
+" Clipboard
+if has('gui_running')
+    set clipboard=unnamed
+endif
+
+" Disable beep.
+set vb t_vb=
+
+" }}}
+
 
 " Colorscheme{{{
 syntax on
@@ -570,25 +593,17 @@ endfunction
 
 " }}}
 
-" Highlight current line.
-set cursorline
-
-set list
-set listchars=tab:▸\ ,eol:¬
-
-" Enable hidden buffers.
-set hidden
-
-
-" tree view (for netrw)
+" tree view (for netrw) {{{
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
+"}}}
 
-" home directory is default
+" Default directory to HOME {{{
 if s:is_windows
     cd $HOME
 else
     cd ~
 endif
+"}}}
 
 
