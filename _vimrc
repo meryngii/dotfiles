@@ -616,6 +616,16 @@ let g:netrw_liststyle = 3
 " Force :make to use the option --print-directory.
 set makeprg=make\ -w
 
+" Auto reloading.
+set autoread
+
+" Check the external changes on WinEnter. "{{{
+augroup vimrc-checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
+"}}}
+
 " }}}
 
 " Default directory to HOME {{{
