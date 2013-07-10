@@ -573,6 +573,9 @@ endfunction
 " Highlight current line.
 set cursorline
 
+" Automatic reloading.
+set autoread
+
 set list
 set listchars=tab:▸\ ,eol:¬
 
