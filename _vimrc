@@ -341,11 +341,11 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 
 " Key Bindings {{{
 
-" Ctrl + hjkl : Resize window {{{
-nnoremap <C-h>   :vertical resize -5<cr>
-nnoremap <C-l>  :vertical resize +5<cr>
-nnoremap <C-k>   :resize +2<cr>
-nnoremap <C-j>     :resize -2<cr>
+" Ctrl + Arrow : Resize window {{{
+nnoremap <C-Left>   :vertical resize -5<cr>
+nnoremap <C-Right>  :vertical resize +5<cr>
+nnoremap <C-Up>   :resize +2<cr>
+nnoremap <C-Down>     :resize -2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
@@ -449,7 +449,9 @@ noremap [fold]d    zd
 "noremap [fold]u :<C-u>Unite outline:foldings<CR>
 noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
 
-autocmd BufRead,BufNewFile .lua _vimrc  setlocal commentstring=--%s
+autocmd FileType lua  setlocal commentstring=--%s
+autocmd FileType vim  setlocal commentstring=\"%s
+autocmd FileType php  setlocal commentstring=//%s
 
 "}}}
 
