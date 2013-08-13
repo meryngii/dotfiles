@@ -77,6 +77,9 @@ NeoBundle 'tyru/open-browser.vim'
 " Folding
 NeoBundle 'LeafCage/foldCC'
 
+" Syntax checking
+NeoBundle 'scrooloose/syntastic'
+
 filetype plugin on
 filetype plugin indent off
 
@@ -338,11 +341,11 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 
 " Key Bindings {{{
 
-" Ctrl + Arrow : Resize window {{{
-nnoremap <C-left>   :vertical resize -5<cr>
-nnoremap <C-right>  :vertical resize +5<cr>
-nnoremap <C-down>   :resize +2<cr>
-nnoremap <C-up>     :resize -2<cr>
+" Shift + hjkl : Resize window {{{
+nnoremap <S-h>   :vertical resize -5<cr>
+nnoremap <S-l>  :vertical resize +5<cr>
+nnoremap <S-k>   :resize +2<cr>
+nnoremap <S-j>     :resize -2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
@@ -687,6 +690,19 @@ vnoremap <silent> < <gv
 " tree view (for netrw) {{{
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
+"}}}
+
+" Force :make to use the option --print-directory.
+set makeprg=make\ -w
+
+" Auto reloading.
+set autoread
+
+" Check the external changes on WinEnter. "{{{
+augroup vimrc-checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
 "}}}
 
 " }}}
