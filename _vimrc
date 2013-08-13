@@ -341,11 +341,11 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 
 " Key Bindings {{{
 
-" Shift + hjkl : Resize window {{{
-nnoremap <S-h>   :vertical resize -5<cr>
-nnoremap <S-l>  :vertical resize +5<cr>
-nnoremap <S-k>   :resize +2<cr>
-nnoremap <S-j>     :resize -2<cr>
+" Ctrl + hjkl : Resize window {{{
+nnoremap <C-h>   :vertical resize -5<cr>
+nnoremap <C-l>  :vertical resize +5<cr>
+nnoremap <C-k>   :resize +2<cr>
+nnoremap <C-j>     :resize -2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
