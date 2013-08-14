@@ -209,7 +209,8 @@ let g:vimfiler_marked_file_icon = '*'
 " Windows only and require latest vimproc.
 let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 
-nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
+nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>:set window=30<CR>:setlocal winfixwidth<CR>
+"nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
 "nnoremap <silent> [Space]c  :VimFilerCreate -quit<CR>
 
 autocmd FileType vimfiler call s:vimfiler_my_settings()
@@ -248,6 +249,9 @@ nnoremap <silent> [unite]s
         \ :<C-u>Unite -buffer-name=files -no-split
         \ jump_point file_point buffer_tab
         \ file_rec:! file file/new file_mru<CR>
+
+nnoremap <silent> [unite]t
+    \ :<C-u>Unite tab<CR>
 
 " Start insert.
 let g:unite_enable_start_insert = 1
@@ -337,11 +341,11 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 
 " Key Bindings {{{
 
-" Shift + hjkl : Resize window {{{
-nnoremap <S-h>   :vertical resize -5<cr>
-nnoremap <S-l>  :vertical resize +5<cr>
-nnoremap <S-k>   :resize +2<cr>
-nnoremap <S-j>     :resize -2<cr>
+" Ctrl + Arrow : Resize window {{{
+nnoremap <C-Left>   :vertical resize -5<cr>
+nnoremap <C-Right>  :vertical resize +5<cr>
+nnoremap <C-Up>   :resize +2<cr>
+nnoremap <C-Down>     :resize -2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
@@ -352,7 +356,7 @@ nnoremap <A-down>   :set transparency-=10<cr>
 " Ctrl+s: Reload .vimrc & .gvimrc
 nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
-" Disable F1's help to prevent mistype
+" Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
 imap <F1> <nop>
 
@@ -400,6 +404,19 @@ nnoremap <silent> [Space]cd     :<C-u>CD<CR>
 " <space>sudo : reopen using sudo
 nnoremap <silent> [Space]sudo   :e sudo:%<cr>
 
+" Fixing the size of the current window. "{{{
+
+nmap z  [CurrentWindow]
+
+" zw : Fix the height of the current window.
+nnoremap [CurrentWindow]w   :<C-u>setlocal winfixwidth!<CR>
+
+" zh : Fix the height of the current window.
+nnoremap [CurrentWindow]h   :<C-u>setlocal winfixheight!<CR>
+
+
+"}}}
+
 " }}}
 
 " Folding {{{
@@ -410,6 +427,7 @@ set foldtext=FoldCCtext()
 
 noremap [fold]     <Nop>
 nmap    [Space]f [fold]
+vmap    [Space]f [fold]
 
 " move over foldings
 noremap [Space]j    zj
@@ -431,7 +449,63 @@ noremap [fold]d    zd
 "noremap [fold]u :<C-u>Unite outline:foldings<CR>
 noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
 
-autocmd BufRead,BufNewFile .lua _vimrc  setlocal commentstring=--%s
+autocmd FileType lua  setlocal commentstring=--%s
+autocmd FileType vim  setlocal commentstring=\"%s
+autocmd FileType php  setlocal commentstring=//%s
+
+"}}}
+
+" Tab "{{{
+
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '+' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%='
+  let s .= '%=' . getcwd() . ' '
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " 常にタブラインを表示
+
+" Use text-based tab pages.
+set guioptions-=e
+
+" The prefix key.
+nnoremap    [Tabpage]   <Nop>
+nmap    t [Tabpage]
+
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tabpage]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+
+map <silent> [Tabpage]c :tablast <bar> tabnew<CR>
+" tc 新しいタブを一番右に作る
+map <silent> [Tabpage]x :tabclose<CR>
+" tx タブを閉じる
+map <silent> [Tabpage]n :tabnext<CR>
+" tn 次のタブ
+map <silent> [Tabpage]p :tabprevious<CR>
+" tp 前のタブ
 
 "}}}
 
@@ -531,6 +605,14 @@ endif
 " Disable beep.
 set vb t_vb=
 
+" Disable automatic newline insertion.
+set textwidth=0
+
+autocmd FileType text setlocal textwidth=0
+
+" Disable automatic window resizing.
+" (Use <C-w>= to resize the windows manually.)
+set noequalalways
 
 " Colorscheme{{{
 syntax on
@@ -594,7 +676,6 @@ endfunction
 
 " }}}
 
-
 " Highlight current line.
 set cursorline
 
@@ -638,5 +719,4 @@ else
     cd ~
 endif
 "}}}
-
 
