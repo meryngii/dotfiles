@@ -341,16 +341,16 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 
 " Key Bindings {{{
 
-" Ctrl + Arrow : Resize window {{{
-nnoremap <C-Left>   :vertical resize -5<cr>
-nnoremap <C-Right>  :vertical resize +5<cr>
-nnoremap <C-Up>   :resize +2<cr>
-nnoremap <C-Down>     :resize -2<cr>
+" Alt + Arrow : Resize window {{{
+nnoremap <A-Left>   :vertical resize -5<cr>
+nnoremap <A-Right>  :vertical resize +5<cr>
+nnoremap <A-Up>   :resize -2<cr>
+nnoremap <A-Down>     :resize +2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
-nnoremap <A-up>     :set transparency+=10<cr>
-nnoremap <A-down>   :set transparency-=10<cr>
+"nnoremap <A-up>     :set transparency+=10<cr>
+"nnoremap <A-down>   :set transparency-=10<cr>
 " }}}
 
 " Ctrl+s: Reload .vimrc & .gvimrc
@@ -416,6 +416,11 @@ nnoremap [CurrentWindow]h   :<C-u>setlocal winfixheight!<CR>
 
 
 "}}}
+
+" Keep the correct indent despite blank lines.
+nnoremap o oX<C-h>
+nnoremap O OX<C-h>
+inoremap <CR> <CR>X<C-h>
 
 " }}}
 
