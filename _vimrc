@@ -344,8 +344,8 @@ nnoremap <silent> <Space>run :QuickRun<CR>
 " Alt + Arrow : Resize window {{{
 nnoremap <A-Left>   :vertical resize -5<cr>
 nnoremap <A-Right>  :vertical resize +5<cr>
-nnoremap <A-Up>   :resize +2<cr>
-nnoremap <A-Down>     :resize -2<cr>
+nnoremap <A-Up>   :resize -2<cr>
+nnoremap <A-Down>     :resize +2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency {{{
