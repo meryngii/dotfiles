@@ -11,6 +11,11 @@ let s:is_windows = has('win32') || has('win64')
 
 let s:is_mac = !s:is_windows && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
+" Set autocmd group.
+augroup MyAutoCmd
+    autocmd!
+augroup END
+
 "}}}
 
 " swap & backup "{{{
@@ -29,14 +34,24 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+" Let NeoBundle manage NeoBundle
+"NeoBundleFetch 'Shougo/neobundle.vim'
+
 " Thanks to Shougo-san
-NeoBundle "Shougo/vimproc"
-NeoBundle "Shougo/vimshell"
+NeoBundle "Shougo/vimproc.vim", {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
+NeoBundle "Shougo/vimshell.vim"
 NeoBundle "Shougo/unite.vim"
-NeoBundle "Shougo/vimfiler"
-NeoBundle "Shougo/vinarise"
-NeoBundle "Shougo/neocomplete"
-NeoBundle 'Shougo/neosnippet'
+NeoBundle "Shougo/vimfiler.vim"
+NeoBundle 'git://github.com/Shougo/vinarise.git' " avoids error
+NeoBundle "Shougo/neocomplete.vim"
+NeoBundle 'Shougo/neosnippet.vim'
 
 " unite sources
 NeoBundle "Shougo/unite-outline"
@@ -83,7 +98,7 @@ NeoBundle 'scrooloose/syntastic'
 filetype plugin on
 filetype plugin indent off
 
-" "}}}
+"}}}
 
 " [Space] Smart space mapping. "{{{
 nmap  <Space>   [Space]
@@ -92,7 +107,7 @@ nnoremap  [Space]   <Nop>
 xnoremap  [Space]   <Nop>
 "}}}
 
-" NeoComplCache & NeoSnippet "{{{
+" NeoComplete & NeoSnippet "{{{
 
 if has('gui_running')
     " default settings for neocomplcache & neosnippet
@@ -163,11 +178,14 @@ if has('gui_running')
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
     " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    augroup OmniCompletionGroup
+        autocmd!
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    augroup END
 
     " Enable heavy omni completion.
     if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -210,18 +228,21 @@ let g:vimfiler_as_default_explorer = 1 " replace netrw
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
 " Like Textmate icons.
 let g:vimfiler_tree_leaf_icon = ' '
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
+if has('gui_running')
+    let g:vimfiler_tree_opened_icon = '▾'
+    let g:vimfiler_tree_closed_icon = '▸'
+else
+    let g:vimfiler_tree_opened_icon = 'V'
+    let g:vimfiler_tree_closed_icon = '>'
+endif
 let g:vimfiler_file_icon = '-'
 let g:vimfiler_marked_file_icon = '*'
 " Windows only and require latest vimproc.
 let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 
-nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>:set window=30<CR>:setlocal winfixwidth<CR>
-"nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -winwidth=30 -toggle -no-quit<CR>
-"nnoremap <silent> [Space]c  :VimFilerCreate -quit<CR>
+nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>:vertical resize 30<CR>:setlocal winfixwidth<CR>
 
-autocmd FileType vimfiler call s:vimfiler_my_settings()
+autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
 endfunction
@@ -231,10 +252,10 @@ endfunction
 nnoremap    [unite]   <Nop>
 nmap    [Space]u [unite]
 
-nnoremap <silent> [unite]b  :UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f  :Unite buffer file_mru file file/new<CR>
-nnoremap <silent> [unite]s  :Unite source<CR>
-nnoremap <silent> [unite]g  :Unite vimgrep -auto-preview -no-quit -resume<CR>
+nnoremap <silent> [unite]b   :<C-u>UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]f   :<C-u>Unite buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]s   :<C-u>Unite source<CR>
+nnoremap <silent> [unite]g   :<C-u>Unite vimgrep -auto-preview -no-quit -resume<CR>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 \ -buffer-name=files buffer file_mru bookmark file<CR>
@@ -250,14 +271,13 @@ nnoremap <silent> [unite]ma
 nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
 
-nnoremap <silent> [unite]t
-    \ :<C-u>Unite tab<CR>
+nnoremap <silent> [unite]t  :<C-u>Unite tab<CR>
 
 " Start insert.
 let g:unite_enable_start_insert = 1
 "let g:unite_enable_short_source_names = 1
 
-autocmd FileType unite call s:unite_my_settings()
+autocmd MyAutoCmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     " Overwrite settings.
 
@@ -293,7 +313,7 @@ function! s:unite_my_settings()"{{{
     nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
     nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
     \ empty(unite#mappings#get_current_filters()) ? ['sorter_reverse'] : [])
-    endfunction"}}}
+endfunction"}}}
 
 let g:unite_source_file_mru_limit = 200
 let g:unite_cursor_line_highlight = 'TabLineSel'
@@ -302,30 +322,20 @@ let g:unite_abbr_highlight = 'TabLine'
 " For optimize.
 let g:unite_source_file_mru_filename_format = ''
 
+" For jvgrep.
 if executable('jvgrep')
-  " For jvgrep.
-  let g:unite_source_grep_command = 'jvgrep'
-  let g:unite_source_grep_default_opts = '--exclude ''\.(git|svn|hg|bzr)'''
-  let g:unite_source_grep_recursive_opt = '-R'
+    let g:unite_source_grep_command = 'jvgrep'
+    let g:unite_source_grep_default_opts = '--exclude ''\.(git|svn|hg|bzr)'''
+    let g:unite_source_grep_recursive_opt = '-R'
 endif
 
 " For ack.
 if executable('ack-grep')
-  " let g:unite_source_grep_command = 'ack-grep'
-  " let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
-  " let g:unite_source_grep_recursive_opt = ''
+    " let g:unite_source_grep_command = 'ack-grep'
+    " let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+    " let g:unite_source_grep_recursive_opt = ''
 endif
 
-"}}}
-
-" Align "{{{
-let g:Align_xstrlen = 3
-"}}}
-
-" VimShell "{{{
-nnoremap <silent> [Space]sh :VimShell -split<cr>
-
-let g:vimshell_right_prompt = 'getcwd()'
 "}}}
 
 " QuickRun "{{{
@@ -335,8 +345,23 @@ let g:quickrun_config['markdown'] = {
       \ 'outputter': 'browser',
       \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
+
 " [Space]run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
+"}}}
+
+" Other Plugins "{{{
+
+" VimShell "{{{
+nnoremap <silent> [Space]sh :VimShellBufferDir<cr>
+
+let g:vimshell_right_prompt = 'getcwd()'
+"}}}
+
+" Align "{{{
+let g:Align_xstrlen = 3
+"}}}
+
 "}}}
 
 " Key Bindings "{{{
@@ -406,13 +431,11 @@ nnoremap <silent> [Space]sudo   :e sudo:%<cr>
 
 " Fixing the size of the current window. "{{{
 
-nmap z  [CurrentWindow]
+" [Space]fixw : Fix the height of the current window.
+nnoremap [Space]fixw   :<C-u>setlocal winfixwidth!<CR>:setlocal winfixwidth?<CR>
 
-" zw : Fix the height of the current window.
-nnoremap [CurrentWindow]w   :<C-u>setlocal winfixwidth!<CR>
-
-" zh : Fix the height of the current window.
-nnoremap [CurrentWindow]h   :<C-u>setlocal winfixheight!<CR>
+" [Space]fixh : Fix the height of the current window.
+nnoremap [Space]fixh   :<C-u>setlocal winfixheight!<CR>:setlocal winfixwidth?<CR>
 
 "}}}
 
@@ -453,9 +476,12 @@ noremap [fold]d    zd
 "noremap [fold]u :<C-u>Unite outline:foldings<CR>
 noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
 
-autocmd FileType lua  setlocal commentstring=--%s
-autocmd FileType vim  setlocal commentstring=\"%s
-autocmd FileType php  setlocal commentstring=//%s
+augroup FoldingCommentGroup
+    autocmd!
+    autocmd FileType lua  setlocal commentstring=--%s
+    autocmd FileType vim  setlocal commentstring=\"%s
+    autocmd FileType php  setlocal commentstring=//%s
+augroup END
 
 "}}}
 
@@ -531,22 +557,23 @@ if has('path_extra')
     set tags+=tags;
 endif
 
-"nnoremap <C-]> :<C-u>UniteWithCursorWord tag<CR>
+" Ctrl + j : tag jump with unite-tag
+nnoremap <C-j> :<C-u>UniteWithCursorWord -immediately tag<CR>
 
 "}}}
 
 " File Type {{{
 
-" Makefile prohibits using spaces instead of tab
-autocmd BufNewFile,BufRead Makefile  set noexpandtab
+augroup FiletypeGroup
+    autocmd!
 
-" Markdown
-autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
-autocmd BufRead,BufNewFile *.md  set filetype=markdown
+    " Makefile prohibits using spaces instead of tab
+    autocmd BufNewFile,BufRead Makefile  set noexpandtab
 
-" Configuration Files
-autocmd BufRead,BufNewFile _zshrc   set filetype=zsh
-autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
+    " Markdown
+    autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
+    autocmd BufRead,BufNewFile *.md  set filetype=markdown
+augroup END
 
 "}}}
 
@@ -561,7 +588,7 @@ set fileencoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp,cp932
 
 " Create a new buffer with UTF-8.
-autocmd BufNewFile *    set fileencoding=utf-8
+autocmd MyAutoCmd BufNewFile *    set fileencoding=utf-8
 
 " Commands to reopen with the specified character code "{{{
 command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
@@ -621,8 +648,7 @@ set vb t_vb=
 
 " Disable automatic newline insertion.
 set textwidth=0
-
-autocmd FileType text setlocal textwidth=0
+autocmd MyAutoCmd FileType text setlocal textwidth=0
 
 " Disable automatic window resizing.
 " (Use <C-w>= to resize the windows manually.)
@@ -693,12 +719,6 @@ endfunction
 " Highlight current line.
 set cursorline
 
-" Automatic reloading.
-set autoread
-
-set list
-set listchars=tab:▸\ ,eol:¬
-
 " Enable hidden buffers.
 set hidden
 
@@ -706,15 +726,20 @@ set hidden
 vnoremap <silent> > >gv
 vnoremap <silent> < <gv
 
+" Show tabs and new-lines.
+set list
+set listchars=tab:▸\ ,eol:¬
+
 " tree view (for netrw) "{{{
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
+
 "}}}
 
 " Force :make to use the option --print-directory.
 set makeprg=make\ -w
 
-" Auto reloading.
+" Automatic reloading.
 set autoread
 
 " Check the external changes on WinEnter. "{{{

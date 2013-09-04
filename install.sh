@@ -1,14 +1,13 @@
 #!/bin/sh
 
-LINKED_DIRECTRIES=".vim"
-LINKED_FILES=".vimrc .gvimrc .vimshrc .zshrc .gitconfig .gitignore"
+LINKED_FILES=".vim .vimrc .gvimrc .vimshrc .bashrc .zshrc .gitconfig .gitignore"
 
 git submodule init && git submodule update
 
-for LINKED_FILE in ${LINKED_FILES};
+for LINKED in ${LINKED_FILES};
 do
-    #rm -rf ~/${LINKED_FILE}
-    mklink /D ~/$LINKED $LINKED
+    rm -ri ~/$LINKED
+    ln -s $LINKED ~/$LINKED
 done
 
 vim +NeoBundleInstall! +qall
