@@ -1,6 +1,5 @@
-[user]
-    name = meryngii
-    email = meryngii+git@gmail.com
+[core]
+    autocrlf = false
 
 [color]
     ui = auto

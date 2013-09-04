@@ -245,10 +245,10 @@ nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
 "nnoremap  [unite]f  :<C-u>Unite source<CR>
 
-nnoremap <silent> [unite]s
-        \ :<C-u>Unite -buffer-name=files -no-split
-        \ jump_point file_point buffer_tab
-        \ file_rec:! file file/new file_mru<CR>
+"nnoremap <silent> [unite]s
+"        \ :<C-u>Unite -buffer-name=files -no-split
+"        \ jump_point file_point buffer_tab
+"        \ file_rec:! file file/new file_mru<CR>
 
 nnoremap <silent> [unite]t
     \ :<C-u>Unite tab<CR>
@@ -484,7 +484,7 @@ function! s:my_tabline()  "{{{
     let s .= '%#TabLineFill# '
   endfor
   let s .= '%#TabLineFill#%T%='
-  let s .= '%=' . getcwd() . ' '
+  let s .= '%=' . ' %{fugitive#statusline()} ' . getcwd() . ' '
   return s
 endfunction "}}}
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
@@ -525,6 +525,16 @@ set shiftwidth=4
 set autoindent
 set expandtab
 " }}}
+
+" Tag {{{
+
+if has('path_extra')
+    set tags+=tags;
+endif
+
+"nnoremap <C-]> :<C-u>UniteWithCursorWord tag<CR>
+
+"}}}
 
 " File Type {{{
 
@@ -632,8 +642,8 @@ set statusline=
 set statusline+=[#%n]  " バッファ番号
 set statusline+=%m     " %m 修正フラグ
 set statusline+=%r     " %r 読み込み専用フラグ
+"set statusline+=%{fugitive#statusline()} " Gitのブランチ名を表示
 set statusline+=%<     " 行が長すぎるときに切り詰める位置
-set statusline+=%{fugitive#statusline()} " Gitのブランチ名を表示
 set statusline+=%h     " %h ヘルプバッファフラグ
 set statusline+=%w     " %w プレビューウィンドウフラグ
 set statusline+=\ %{&filetype}\ \|\  
