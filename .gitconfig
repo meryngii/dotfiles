@@ -11,16 +11,20 @@
     default = tracking
 
 [alias]
+    a    = add
     st   = status
     sh   = show
     d    = diff
     di   = diff
-    info = remote show origin
+    dh   = diff HEAD
     f    = fetch --prune
     ls   = ls-files -t
-    ci   = commit -a
+    cm   = commit
+    cmm  = commit -am
     co   = checkout
-    l    = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
+    l    = log
+    lg   = log --graph
+    lo   = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
     b    = branch
     ba   = branch -a
 
