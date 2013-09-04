@@ -238,8 +238,6 @@ nnoremap <silent> [unite]g  :Unite vimgrep -auto-preview -no-quit -resume<CR>
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 \ -buffer-name=files buffer file_mru bookmark file<CR>
-"nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
-"\ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
 nnoremap <silent> [unite]r  :<C-u>Unite
 \ -buffer-name=register register<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
@@ -251,13 +249,6 @@ nnoremap <silent> [unite]ma
 \ :<C-u>Unite mapping<CR>
 nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
-"nnoremap  [unite]f  :<C-u>Unite source<CR>
-
-nnoremap <silent> [unite]s
-"nnoremap <silent> [unite]s
-"        \ :<C-u>Unite -buffer-name=files -no-split
-"        \ jump_point file_point buffer_tab
-"        \ file_rec:! file file/new file_mru<CR>
 
 nnoremap <silent> [unite]t
     \ :<C-u>Unite tab<CR>
