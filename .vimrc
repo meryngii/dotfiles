@@ -251,6 +251,7 @@ nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
 "nnoremap  [unite]f  :<C-u>Unite source<CR>
 
+nnoremap <silent> [unite]s
 "nnoremap <silent> [unite]s
 "        \ :<C-u>Unite -buffer-name=files -no-split
 "        \ jump_point file_point buffer_tab
