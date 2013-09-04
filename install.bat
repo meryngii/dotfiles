@@ -5,14 +5,13 @@ cd %HOME%\dotfiles
 
 git submodule init && git submodule update
 
-mkdir _vim\backup _vim\swp
-
-mklink /d %HOME%\.vim       dotfiles\_vim
-mklink    %HOME%\.vimrc     dotfiles\_vimrc
-mklink    %HOME%\.gvimrc    dotfiles\_gvimrc
-mklink    %HOME%\.vimshrc   dotfiles\_vimshrc
-mklink    %HOME%\.zshrc     dotfiles\_zshrc
-mklink    %HOME%\.gitconfig dotfiles\_gitconfig
+mklink /d %HOME%\.vim       dotfiles\.vim
+mklink    %HOME%\.vimrc     dotfiles\.vimrc
+mklink    %HOME%\.gvimrc    dotfiles\.gvimrc
+mklink    %HOME%\.vimshrc   dotfiles\.vimshrc
+mklink    %HOME%\.zshrc     dotfiles\.zshrc
+mklink    %HOME%\.gitconfig dotfiles\.gitconfig
+mklink    %HOME%\.gitignore dotfiles\.gitignore
 
 pause
 

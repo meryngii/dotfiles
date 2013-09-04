@@ -1,2 +1,8 @@
-/.vim/.nettrwhist
+
+# Vim
+*~
+*.swp
+
+# Windows
+Thumbs.db
 
