@@ -1,6 +1,8 @@
-" *** .vimrc for meryngii ***
+" ---------------------------
+"     .vimrc for meryngii
+" ---------------------------
 
-" Initial setup {{{
+" Initial setup "{{{
 
 " iMproved!
 set nocompatible
@@ -9,16 +11,16 @@ let s:is_windows = has('win32') || has('win64')
 
 let s:is_mac = !s:is_windows && (has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin')
 
-" }}}
+"}}}
 
-" swap & backup {{{
+" swap & backup "{{{
 set swapfile
 set directory=~/.vim/swap
 set backup
 set backupdir=~/.vim/backup
-" }}}
+"}}}
 
-" NeoBundle and Loaded plugins {{{
+" NeoBundle and Loaded plugins "{{{
 filetype off
 
 if has('vim_starting')
@@ -81,14 +83,14 @@ NeoBundle 'scrooloose/syntastic'
 filetype plugin on
 filetype plugin indent off
 
-" }}}
+" "}}}
 
-" [Space] Smart space mapping. {{{
+" [Space] Smart space mapping. "{{{
 nmap  <Space>   [Space]
 xmap  <Space>   [Space]
 nnoremap  [Space]   <Nop>
 xnoremap  [Space]   <Nop>
-" }}}
+"}}}
 
 " NeoComplCache & NeoSnippet "{{{
 
@@ -200,9 +202,9 @@ if has('gui_running')
     let g:neocomplcache_lock_buffer_name_pattern = '.*\.tex'
 endif
 
-" }}}
+"}}}
 
-" VimFiler {{{
+" VimFiler "{{{
 let g:vimfiler_as_default_explorer = 1 " replace netrw
 "let g:vimfiler_edit_action = 'tabopen' " Edit file by tabedit.
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
@@ -223,9 +225,9 @@ autocmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
 endfunction
-" }}}
+"}}}
 
-" Unite.vim {{{
+" Unite.vim "{{{
 nnoremap    [unite]   <Nop>
 nmap    [Space]u [unite]
 
@@ -325,17 +327,17 @@ endif
 
 "}}}
 
-" Align {{{
+" Align "{{{
 let g:Align_xstrlen = 3
-" }}}
+"}}}
 
-" VimShell {{{
+" VimShell "{{{
 nnoremap <silent> [Space]sh :VimShell -split<cr>
 
 let g:vimshell_right_prompt = 'getcwd()'
-" }}}
+"}}}
 
-" QuickRun {{{
+" QuickRun "{{{
 let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
@@ -344,18 +346,18 @@ let g:quickrun_config['markdown'] = {
       \ }
 " [Space]run : QuickRun
 nnoremap <silent> <Space>run :QuickRun<CR>
-" }}}
+"}}}
 
-" Key Bindings {{{
+" Key Bindings "{{{
 
-" Alt + Arrow : Resize window {{{
+" Alt + Arrow : Resize window "{{{
 nnoremap <A-Left>   :vertical resize -5<cr>
 nnoremap <A-Right>  :vertical resize +5<cr>
 nnoremap <A-Up>   :resize -2<cr>
 nnoremap <A-Down>     :resize +2<cr>
 " }}}
 
-" Alt + Up/Down : Change transparency {{{
+" Alt + Up/Down : Change transparency "{{{
 "nnoremap <A-up>     :set transparency+=10<cr>
 "nnoremap <A-down>   :set transparency-=10<cr>
 " }}}
@@ -367,7 +369,7 @@ nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 nmap <F1> <nop>
 imap <F1> <nop>
 
-" F7 : FullScreen (only works on Windows) {{{
+" F7 : FullScreen (only works on Windows) "{{{
 nnoremap <F7> :call ToggleFullScreen()<CR>
 function! ToggleFullScreen()
   if &guioptions =~# 'C'
@@ -389,9 +391,9 @@ function! ToggleFullScreen()
     simalt ~x
   endif
 endfunction
-" }}}
+"}}}
 
-" [Space]cd  {{{
+" [Space]cd "{{{
 " Move to the directory of the current buffer.
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
@@ -406,7 +408,7 @@ function! s:ChangeCurrentDir(directory, bang)
     endif
 endfunction
 nnoremap <silent> [Space]cd     :<C-u>CD<CR>
-" }}}
+"}}}
 
 " <space>sudo : reopen using sudo
 nnoremap <silent> [Space]sudo   :e sudo:%<cr>
@@ -421,7 +423,6 @@ nnoremap [CurrentWindow]w   :<C-u>setlocal winfixwidth!<CR>
 " zh : Fix the height of the current window.
 nnoremap [CurrentWindow]h   :<C-u>setlocal winfixheight!<CR>
 
-
 "}}}
 
 " Keep the correct indent despite blank lines.
@@ -429,9 +430,9 @@ nnoremap o oX<C-h>
 nnoremap O OX<C-h>
 inoremap <CR> <CR>X<C-h>
 
-" }}}
+"}}}
 
-" Folding {{{
+" Folding "{{{
 set foldenable
 set foldmethod=marker
 set commentstring=%s
@@ -521,19 +522,19 @@ map <silent> [Tabpage]p :tabprevious<CR>
 
 "}}}
 
-" Indent {{{
+" Indent "{{{
 set tabstop=4
-"tabが押されたときに実際に挿入される空白の文字数
+" tabが押されたときに実際に挿入される空白の文字数
 set softtabstop=4
-"オートインデント時に挿入される空白文字数
+" オートインデント時に挿入される空白文字数
 set shiftwidth=4
-"tabの代わりに半角スペースを挿入する
+" tabの代わりに半角スペースを挿入する
 
 set autoindent
 set expandtab
-" }}}
+"}}}
 
-" Tag {{{
+" Tag "{{{
 
 if has('path_extra')
     set tags+=tags;
@@ -556,9 +557,9 @@ autocmd BufRead,BufNewFile *.md  set filetype=markdown
 autocmd BufRead,BufNewFile _zshrc   set filetype=zsh
 autocmd BufRead,BufNewFile _gitconfig   set filetype=gitconfig
 
-" }}}
+"}}}
 
-" File Encodings {{{
+" File Encodings "{{{
 if s:is_windows && !has('gui_running')
     set encoding=cp932
 else
@@ -584,11 +585,11 @@ command! -bang -bar -complete=file -nargs=? Sjis  Cp932<bang> <args>
 command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
 "}}}
 
-" }}}
+"}}}
 
-" Basic Settings {{{
+" Basic Settings "{{{
 
-" Searching "{{{{
+" Searching "{{{
 
 " Enable incremental search.
 set incsearch
@@ -636,13 +637,13 @@ autocmd FileType text setlocal textwidth=0
 " (Use <C-w>= to resize the windows manually.)
 set noequalalways
 
-" Colorscheme{{{
+" Colorscheme "{{{
 syntax on
 colorscheme desert
 set laststatus=2
-" }}}
+"}}}
 
-" Status Line {{{
+" Status Line "{{{
 
 " ステータスラインの表示
 set statusline=
@@ -696,7 +697,7 @@ function! s:GetHighlight(hi)
   return hl
 endfunction
 
-" }}}
+"}}}
 
 " Highlight current line.
 set cursorline
@@ -714,7 +715,7 @@ set hidden
 vnoremap <silent> > >gv
 vnoremap <silent> < <gv
 
-" tree view (for netrw) {{{
+" tree view (for netrw) "{{{
 " but netrw is replaced by VimFiler
 let g:netrw_liststyle = 3
 "}}}
@@ -732,7 +733,7 @@ augroup vimrc-checktime
 augroup END
 "}}}
 
-" }}}
+"}}}
 
 " Default directory to HOME {{{
 if s:is_windows
@@ -742,3 +743,4 @@ else
 endif
 "}}}
 
+" vim: foldmethod=marker
