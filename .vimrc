@@ -733,14 +733,9 @@ augroup vimrc-checktime
 augroup END
 "}}}
 
-"}}}
+" Default directory to HOME.
+cd ~
 
-" Default directory to HOME {{{
-if s:is_windows
-    cd $HOME
-else
-    cd ~
-endif
 "}}}
 
 " vim: foldmethod=marker
