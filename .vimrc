@@ -50,8 +50,10 @@ NeoBundle "Shougo/vimshell.vim"
 NeoBundle "Shougo/unite.vim"
 NeoBundle "Shougo/vimfiler.vim"
 NeoBundle 'git://github.com/Shougo/vinarise.git' " avoids error
-NeoBundle "Shougo/neocomplete.vim"
-NeoBundle 'Shougo/neosnippet.vim'
+if has('gui_running')
+    NeoBundle "Shougo/neocomplete.vim"
+    NeoBundle 'Shougo/neosnippet.vim'
+endif
 
 " unite sources
 NeoBundle "Shougo/unite-outline"
@@ -81,6 +83,7 @@ NeoBundle 'ujihisa/unite-colorscheme'
 
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-rooter'
 
 " File-type
 "NeoBundle 'mkd.vim'
@@ -94,6 +97,9 @@ NeoBundle 'LeafCage/foldCC'
 
 " Syntax checking
 NeoBundle 'scrooloose/syntastic'
+
+" Game
+NeoBundle 'rbtnn/puyo.vim'
 
 filetype plugin on
 filetype plugin indent off
@@ -259,10 +265,10 @@ nnoremap <silent> [unite]g   :<C-u>Unite vimgrep -auto-preview -no-quit -resume<
 
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
 \ -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]r  :<C-u>Unite
-\ -buffer-name=register register<CR>
+"nnoremap <silent> [unite]r  :<C-u>Unite
+"\ -buffer-name=register register<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-nnoremap <silent> [unite]u
+nnoremap <silent> [unite]r
 \ :<C-u>Unite -buffer-name=resume resume<CR>
 nnoremap <silent> [unite]d
 \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
@@ -271,7 +277,9 @@ nnoremap <silent> [unite]ma
 nnoremap <silent> [unite]me
 \ :<C-u>Unite output:message<CR>
 
-nnoremap <silent> [unite]t  :<C-u>Unite tab<CR>
+nnoremap <silent> [unite]t  :<C-u>Unite tag<CR>
+
+nnoremap <silent> [unite]u  :<C-u>Unite file_rec/async<CR>
 
 " Start insert.
 let g:unite_enable_start_insert = 1
@@ -362,20 +370,39 @@ let g:vimshell_right_prompt = 'getcwd()'
 let g:Align_xstrlen = 3
 "}}}
 
+" Syntastic "{{{
+let g:syntastic_cpp_compiler = 'g++-4.8'
+let g:syntastic_cpp_compiler_options = ' -std=c++0x'
+"}}}
+
 "}}}
 
 " Key Bindings "{{{
 
+if s:is_mac
+    " Use option key as meta key.
+    set macmeta
+
+    " Disable some default key-bindings of MacVim.
+    let macvim_skip_cmd_opt_movement = 1
+endif
+
 " Alt + Arrow : Resize window "{{{
-nnoremap <A-Left>   :vertical resize -5<cr>
-nnoremap <A-Right>  :vertical resize +5<cr>
-nnoremap <A-Up>   :resize -2<cr>
-nnoremap <A-Down>     :resize +2<cr>
+nnoremap <silent> <A-Left>    :vertical resize -5<cr>
+nnoremap <silent> <A-Right>   :vertical resize +5<cr>
+nnoremap <silent> <A-Up>      :resize -2<cr>
+nnoremap <silent> <A-Down>    :resize +2<cr>
 " }}}
 
 " Alt + Up/Down : Change transparency "{{{
-"nnoremap <A-up>     :set transparency+=10<cr>
-"nnoremap <A-down>   :set transparency-=10<cr>
+if s:is_mac
+    nnoremap <A-S-up>     :set transparency-=5<cr>
+    nnoremap <A-S-down>   :set transparency+=5<cr>
+else
+    nnoremap <A-S-up>     :set transparency+=10<cr>
+    nnoremap <A-S-down>   :set transparency-=10<cr>
+end
+
 " }}}
 
 " Ctrl+s: Reload .vimrc & .gvimrc
@@ -409,8 +436,7 @@ function! ToggleFullScreen()
 endfunction
 "}}}
 
-" [Space]cd "{{{
-" Move to the directory of the current buffer.
+" [Space]cd : Move to the directory of the current buffer. "{{{
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -426,7 +452,7 @@ endfunction
 nnoremap <silent> [Space]cd     :<C-u>CD<CR>
 "}}}
 
-" <space>sudo : reopen using sudo
+" [space]sudo : reopen using sudo
 nnoremap <silent> [Space]sudo   :e sudo:%<cr>
 
 " Fixing the size of the current window. "{{{
@@ -443,6 +469,16 @@ nnoremap [Space]fixh   :<C-u>setlocal winfixheight!<CR>:setlocal winfixwidth?<CR
 nnoremap o oX<C-h>
 nnoremap O OX<C-h>
 inoremap <CR> <CR>X<C-h>
+
+" :RemoveSwap : Remove all swap files.
+function! s:remove_swapfiles()
+    let list = split(glob("~/.vim/swap/*"), "\n")
+    for file in list
+        echo file
+        call delete(file)
+    endfor
+endfunction
+command! -nargs=0 RemoveSwap  call s:remove_swapfiles()
 
 "}}}
 
@@ -605,13 +641,20 @@ command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
 
 "}}}
 
+" Syntax "{{{
+
+" Show the syntax name on the cursor position.
+command! -bang -bar Highlight :echo synIDattr(synID(line('.'), col('.'), 0), 'name')
+
+"}}}
+
 " Basic Settings "{{{
 
 " Searching "{{{
 
 " Enable incremental search.
 set incsearch
-" Enable highlighting when searching.
+" Enable highlighting during searching.
 set hlsearch
 
 " }}}

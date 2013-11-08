@@ -66,3 +66,7 @@ bindkey "^[[3~" delete-char       # 'Delete'
 
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
+
+
+path=(${path} /Applications/Inkscape.app/Contents/MacOS/(N-/))
+
