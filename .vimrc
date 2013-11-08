@@ -65,6 +65,7 @@ NeoBundle "Shougo/unite-build"
 NeoBundle "sudo.vim"
 " Text
 NeoBundle 'Align'
+NeoBundle 'godlygeek/tabular'
 NeoBundle 'surround.vim'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
