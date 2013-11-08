@@ -59,6 +59,7 @@ endif
 NeoBundle "Shougo/unite-outline"
 NeoBundle "osyo-manga/unite-quickfix"
 NeoBundle "tsukkee/unite-tag"
+NeoBundle "Shougo/unite-build"
 
 " File
 NeoBundle "sudo.vim"
@@ -84,9 +85,6 @@ NeoBundle 'ujihisa/unite-colorscheme'
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-rooter'
-
-" File-type
-"NeoBundle 'mkd.vim'
 
 " Quick-run
 NeoBundle 'thinca/vim-quickrun'
@@ -124,7 +122,9 @@ if has('gui_running')
     " Use neocomplete.
     let g:neocomplete#enable_at_startup = 1
     " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
+    "let g:neocomplete#enable_smart_case = 1
+    
+    let g:neocomplete#enable_ignore_case = 1
     " Set minimum syntax keyword length.
     let g:neocomplete#sources#syntax#min_keyword_length = 3
     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -164,25 +164,12 @@ if has('gui_running')
     " Close popup by <Space>.
     "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
-    " For cursor moving in insert mode(Not recommended)
-    "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-    "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-    "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-    "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-    " Or set this.
-    "let g:neocomplete#enable_cursor_hold_i = 1
-    " Or set this.
-    "let g:neocomplete#enable_insert_char_pre = 1
-
-    " AutoComplPop like behavior.
-    "let g:neocomplete#enable_auto_select = 1
-
     " Shell like behavior(not recommended).
     "set completeopt+=longest
     "let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
+    
     " Enable omni completion.
     augroup OmniCompletionGroup
         autocmd!
@@ -204,6 +191,11 @@ if has('gui_running')
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+    
+    
+    " Disable converter_case.
+    call neocomplete#custom#source('_', 'converters', ['converter_abbr', 'converter_delimiter'])
+    
     
     "-- neosnippet --
     " Plugin key-mappings.
@@ -246,8 +238,13 @@ let g:vimfiler_marked_file_icon = '*'
 " Windows only and require latest vimproc.
 let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 
-nnoremap <silent> [Space]es  :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>:vertical resize 30<CR>:setlocal winfixwidth<CR>
+" [Space]x : Open the VimFiler with explorer-like style.
+nnoremap <silent> [Space]x
+\ :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>
+\ :vertical resize 30<CR>
+\ :setlocal winfixwidth<CR>
 
+" Ctrl + R (VimFiler) : Refresh the list of files.
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
@@ -258,28 +255,25 @@ endfunction
 nnoremap    [unite]   <Nop>
 nmap    [Space]u [unite]
 
-nnoremap <silent> [unite]b   :<C-u>UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]f   :<C-u>Unite buffer file_mru file file/new<CR>
-nnoremap <silent> [unite]s   :<C-u>Unite source<CR>
-nnoremap <silent> [unite]g   :<C-u>Unite vimgrep -auto-preview -no-quit -resume<CR>
+nnoremap <silent> [unite]b  :<C-u>Unite -buffer-name=buffers -no-start-insert buffer<CR>
+nnoremap <silent> [unite]f  :<C-u>Unite -buffer-name=files buffer file_mru file file/new<CR>
+nnoremap <silent> [unite]s  :<C-u>Unite -buffer-name=sources source<CR>
+nnoremap <silent> [unite]g  :<C-u>Unite -buffer-name=vimgrep vimgrep -auto-preview -no-quit -resume<CR>
 
-nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
-\ -buffer-name=files buffer file_mru bookmark file<CR>
-"nnoremap <silent> [unite]r  :<C-u>Unite
-"\ -buffer-name=register register<CR>
-nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
-nnoremap <silent> [unite]r
-\ :<C-u>Unite -buffer-name=resume resume<CR>
-nnoremap <silent> [unite]d
-\ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
-nnoremap <silent> [unite]ma
-\ :<C-u>Unite mapping<CR>
-nnoremap <silent> [unite]me
-\ :<C-u>Unite output:message<CR>
+nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+nnoremap <silent> [unite]o  :<C-u>Unite -buffer-name=outline outline<CR>
+nnoremap <silent> [unite]r  :<C-u>Unite -buffer-name=resume -no-start-insert  resume<CR>
+nnoremap <silent> [unite]d  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
+
+nnoremap <silent> [unite]ma :<C-u>Unite mapping<CR>
+nnoremap <silent> [unite]me :<C-u>Unite output:message<CR>
 
 nnoremap <silent> [unite]t  :<C-u>Unite tag<CR>
 
 nnoremap <silent> [unite]u  :<C-u>Unite file_rec/async<CR>
+
+nnoremap <silent> [unite]q  :<C-u>Unite quickfix<CR>
 
 " Start insert.
 let g:unite_enable_start_insert = 1
@@ -354,14 +348,15 @@ let g:quickrun_config['markdown'] = {
       \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
 
-" [Space]run : QuickRun
-nnoremap <silent> <Space>run :QuickRun<CR>
+" [Space]e : QuickRun
+nnoremap <silent> <Space>e  :QuickRun<CR>
 "}}}
 
 " Other Plugins "{{{
 
 " VimShell "{{{
-nnoremap <silent> [Space]sh :VimShellBufferDir<cr>
+nnoremap <silent> [Space]s
+\ :VimShellBufferDir -split -split-command=belowright\ 10split<CR>
 
 let g:vimshell_right_prompt = 'getcwd()'
 "}}}
@@ -379,7 +374,13 @@ let g:syntastic_cpp_compiler_options = ' -std=c++0x'
 
 " Key Bindings "{{{
 
-if s:is_mac
+" Toggle the option. "{{{
+function! ToggleOption(option_name)
+    execute 'setlocal ' a:option_name.'!'
+endfunction
+"}}}
+
+if s:is_mac && has('gui_running')
     " Use option key as meta key.
     set macmeta
 
@@ -394,7 +395,7 @@ nnoremap <silent> <A-Up>      :resize -2<cr>
 nnoremap <silent> <A-Down>    :resize +2<cr>
 " }}}
 
-" Alt + Up/Down : Change transparency "{{{
+" Alt + Shift + Up/Down : Change transparency "{{{
 if s:is_mac
     nnoremap <A-S-up>     :set transparency-=5<cr>
     nnoremap <A-S-down>   :set transparency+=5<cr>
@@ -405,7 +406,7 @@ end
 
 " }}}
 
-" Ctrl+s: Reload .vimrc & .gvimrc
+" Ctrl + s : Reload .vimrc & .gvimrc
 nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 
 " Disable the default action of F1 to show help (to prevent mistype)
@@ -436,7 +437,7 @@ function! ToggleFullScreen()
 endfunction
 "}}}
 
-" [Space]cd : Move to the directory of the current buffer. "{{{
+" [Space]c : Move to the directory of the current buffer. "{{{
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -449,19 +450,29 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-nnoremap <silent> [Space]cd     :<C-u>CD<CR>
+nnoremap <silent> [Space]c     :<C-u>CD<CR>
 "}}}
 
-" [space]sudo : reopen using sudo
-nnoremap <silent> [Space]sudo   :e sudo:%<cr>
+" vim-rooter "{{{
+
+" [Space]r : Move to the root directory.
+nnoremap [Space]r     :Rooter<CR>
+
+let g:rooter_manual_only = 1
+let g:rooter_change_directory_for_non_project_files = 1
+
+"}}}
+
+" [space]su : reopen using sudo
+nnoremap <silent> [Space]su   :e sudo:%<cr>
 
 " Fixing the size of the current window. "{{{
 
 " [Space]fixw : Fix the height of the current window.
-nnoremap [Space]fixw   :<C-u>setlocal winfixwidth!<CR>:setlocal winfixwidth?<CR>
+nnoremap [Space]fixw   :<C-u>call ToggleOption('winfixhwidth')<CR>
 
 " [Space]fixh : Fix the height of the current window.
-nnoremap [Space]fixh   :<C-u>setlocal winfixheight!<CR>:setlocal winfixwidth?<CR>
+nnoremap [Space]fixh   :<C-u>call ToggleOption('winfixheight')<CR>
 
 "}}}
 
@@ -497,20 +508,23 @@ noremap [Space]j    zj
 noremap [space]k    zk
 
 " toggle
-noremap [fold]a    za
+noremap [fold]f    za
 " [h]ide all foldings
 noremap [fold]h    zM
 " [s]how all foldings
 noremap [fold]s    zR
 " show only current folding
 noremap [fold]i    zMzv
-" make [f]olding
-noremap [fold]f    zf
+" [m]ake folding
+noremap [fold]m    zm
 " [d]elete folding
 noremap [fold]d    zd
 
 "noremap [fold]u :<C-u>Unite outline:foldings<CR>
 noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
+
+" z : Toggle the folding.
+noremap z  za
 
 augroup FoldingCommentGroup
     autocmd!
@@ -599,7 +613,6 @@ nnoremap <C-j> :<C-u>UniteWithCursorWord -immediately tag<CR>
 "}}}
 
 " File Type {{{
-
 augroup FiletypeGroup
     autocmd!
 
@@ -610,7 +623,6 @@ augroup FiletypeGroup
     autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
     autocmd BufRead,BufNewFile *.md  set filetype=markdown
 augroup END
-
 "}}}
 
 " File Encodings "{{{
@@ -637,6 +649,15 @@ command! -bang -bar -complete=file -nargs=? Utf16be edit<bang> ++enc=ucs-2 <args
 command! -bang -bar -complete=file -nargs=? Jis  Iso2022jp<bang> <args>
 command! -bang -bar -complete=file -nargs=? Sjis  Cp932<bang> <args>
 command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
+
+
+command! -nargs=? Make  :Unite build:make:-w:<args> -no-start-insert -no-quit -winheight=10
+
+" Ctrl + m : Execute make.
+nnoremap <C-m>   :Make<Space>
+" Ctrl + Alt + m : Execute make clean.
+nnoremap <C-A-m> :Make clean<CR>
+
 "}}}
 
 "}}}
@@ -765,7 +786,7 @@ set cursorline
 " Enable hidden buffers.
 set hidden
 
-" Continue visual mode.
+" Keep the visual mode on indentation.
 vnoremap <silent> > >gv
 vnoremap <silent> < <gv
 
