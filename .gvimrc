@@ -60,7 +60,7 @@ if s:is_windows
     set langmenu=ja_jp.utf-8
     source $VIMRUNTIME/menu.vim
 
-    set guifont=Ricty:h12
+    set guifont=Ricty:h10:cSHIFTJIS
     "set guifont=Consolas:h12,Lucida_Console:h12:w5 guifontwide=MS_Gothic:h12
 
 elseif s:is_mac
