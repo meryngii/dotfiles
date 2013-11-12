@@ -66,7 +66,7 @@ if s:is_windows
 elseif s:is_mac
     "--- Mac OS X ---
 
-    set guifont=Monaco:h13
+    set guifont=Monaco:h12
 
 else
     "--- Linux ---

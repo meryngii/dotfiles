@@ -222,7 +222,6 @@ endif
 
 " VimFiler "{{{
 let g:vimfiler_as_default_explorer = 1 " replace netrw
-"let g:vimfiler_edit_action = 'tabopen' " Edit file by tabedit.
 "let g:vimfiler_safe_mode_by_default = 0 " Enable file operation commands.
 " Like Textmate icons.
 let g:vimfiler_tree_leaf_icon = ' '
@@ -437,8 +436,7 @@ function! ToggleFullScreen()
 endfunction
 "}}}
 
-" [Space]c : Move to the directory of the current buffer. "{{{
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+" Ctrl + c : Move to the directory of the current buffer. "{{{
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
         lcd %:p:h
@@ -450,13 +448,16 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-nnoremap <silent> [Space]c     :<C-u>CD<CR>
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+
+nnoremap <silent> <C-c>        :<C-U>CD<CR>
+
 "}}}
 
 " vim-rooter "{{{
 
 " [Space]r : Move to the root directory.
-nnoremap [Space]r     :Rooter<CR>
+nnoremap <silent> [Space]r     :<C-u>Rooter<CR>
 
 let g:rooter_manual_only = 1
 let g:rooter_change_directory_for_non_project_files = 1
@@ -651,12 +652,12 @@ command! -bang -bar -complete=file -nargs=? Sjis  Cp932<bang> <args>
 command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
 
 
-command! -nargs=? Make  :Unite build:make:-w:<args> -no-start-insert -no-quit -winheight=10
+"command! -nargs=? Make  :Unite build:make:-w:<args> -no-start-insert -no-quit -winheight=10
 
 " Ctrl + m : Execute make.
-nnoremap <C-m>   :Make<Space>
+nnoremap <C-m>   :make<Space>
 " Ctrl + Alt + m : Execute make clean.
-nnoremap <C-A-m> :Make clean<CR>
+nnoremap <C-A-m> :make clean<CR>
 
 "}}}
 
