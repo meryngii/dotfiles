@@ -103,6 +103,9 @@ NeoBundle 'rbtnn/puyo.vim'
 filetype plugin on
 filetype plugin indent off
 
+" Check if the specified plugins are installed.
+NeoBundleCheck
+
 "}}}
 
 " [Space] Smart space mapping. "{{{
@@ -403,7 +406,6 @@ else
     nnoremap <A-S-up>     :set transparency+=10<cr>
     nnoremap <A-S-down>   :set transparency-=10<cr>
 end
-
 " }}}
 
 " Ctrl + s : Reload .vimrc & .gvimrc
@@ -412,30 +414,6 @@ nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
 imap <F1> <nop>
-
-" F7 : FullScreen (only works on Windows) "{{{
-nnoremap <F7> :call ToggleFullScreen()<CR>
-function! ToggleFullScreen()
-  if &guioptions =~# 'C'
-    set guioptions-=C
-    if exists('s:go_temp')
-      if s:go_temp =~# 'm'
-        set guioptions+=m
-      endif
-      if s:go_temp =~# 'T'
-        set guioptions+=T
-      endif
-    endif
-    simalt ~r
-  else
-    let s:go_temp = &guioptions
-    set guioptions+=C
-    set guioptions-=m
-    set guioptions-=T
-    simalt ~x
-  endif
-endfunction
-"}}}
 
 " Ctrl + c : Move to the directory of the current buffer. "{{{
 function! s:ChangeCurrentDir(directory, bang)
@@ -452,7 +430,6 @@ endfunction
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 
 nnoremap <silent> <C-c>        :<C-U>CD<CR>
-
 "}}}
 
 " vim-rooter "{{{

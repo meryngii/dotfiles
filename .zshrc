@@ -69,4 +69,5 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 
 path=(${path} /Applications/Inkscape.app/Contents/MacOS/(N-/))
+path=(${path} /Applications/Maxima.app/Contents/Resources/(N-/))
 
