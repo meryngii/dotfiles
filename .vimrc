@@ -246,6 +246,7 @@ nnoremap <silent> [Space]x
 \ :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>
 \ :vertical resize 25<CR>
 \ :setlocal winfixwidth<CR>
+\ :setlocal nonumber<CR>
 
 " Ctrl + R (VimFiler) : Refresh the list of files.
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
