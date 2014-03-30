@@ -35,7 +35,7 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
-"NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Thanks to Shougo-san
 NeoBundle "Shougo/vimproc.vim", {
@@ -48,6 +48,7 @@ NeoBundle "Shougo/vimproc.vim", {
 \ }
 NeoBundle "Shougo/vimshell.vim"
 NeoBundle "Shougo/unite.vim"
+NeoBundle "Shougo/neomru.vim"
 NeoBundle "Shougo/vimfiler.vim"
 NeoBundle 'git://github.com/Shougo/vinarise.git' " avoids error
 if has('gui_running')
@@ -82,6 +83,8 @@ NeoBundle 'therubymug/vim-pyte'
 NeoBundle 'jeffreyiacono/vim-colors-wombat'
 
 NeoBundle 'ujihisa/unite-colorscheme'
+
+NeoBundle 'bling/vim-airline'
 
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
@@ -127,7 +130,7 @@ if has('gui_running')
     let g:neocomplete#enable_at_startup = 1
     " Use smartcase.
     "let g:neocomplete#enable_smart_case = 1
-    
+
     let g:neocomplete#enable_ignore_case = 1
     " Set minimum syntax keyword length.
     let g:neocomplete#sources#syntax#min_keyword_length = 3
@@ -173,7 +176,7 @@ if has('gui_running')
     "let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-    
+
     " Enable omni completion.
     augroup OmniCompletionGroup
         autocmd!
@@ -195,12 +198,10 @@ if has('gui_running')
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    
-    
+
     " Disable converter_case.
     call neocomplete#custom#source('_', 'converters', ['converter_abbr', 'converter_delimiter'])
-    
-    
+
     "-- neosnippet --
     " Plugin key-mappings.
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -253,6 +254,9 @@ autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <C-r> <Plug>(vimfiler_redraw_screen)
 endfunction
+
+let g:vimfiler_force_overwrite_statusline = 0
+
 "}}}
 
 " Unite.vim "{{{
@@ -374,6 +378,12 @@ let g:syntastic_cpp_compiler = 'g++-4.8'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 "}}}
 
+" Airline "{{{
+
+let g:airline#extensions#tabline#enabled = 1
+
+"}}}
+
 "}}}
 
 " Key Bindings "{{{
@@ -428,7 +438,7 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 
 nnoremap <silent> <C-c>        :<C-U>CD<CR>
 "}}}
@@ -522,7 +532,7 @@ function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
-if neobundle#is_installed("vim-fugitive") 
+if neobundle#is_installed("vim-fugitive")
    " Set tabline.
     function! s:my_tabline()  "{{{
       let s = ''
@@ -721,7 +731,7 @@ set statusline+=%r     " %r 読み込み専用フラグ
 set statusline+=%<     " 行が長すぎるときに切り詰める位置
 set statusline+=%h     " %h ヘルプバッファフラグ
 set statusline+=%w     " %w プレビューウィンドウフラグ
-set statusline+=\ %{&filetype}\ \|\  
+set statusline+=\ %{&filetype}\ \|\
 set statusline+=%{(&fenc!=''?&fenc:&enc)}\:%{&ff}\  " fencとffを表示
 set statusline+=%#StatusLineFile#\ %F " バッファ内のファイルのフルパス
 set statusline+=%=     " 左寄せ項目と右寄せ項目の区切り
