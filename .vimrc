@@ -244,7 +244,7 @@ let g:unite_kind_file_use_trashbox = 1 " Use trashbox.
 " [Space]x : Open the VimFiler with explorer-like style.
 nnoremap <silent> [Space]x
 \ :VimFilerSimple -buffer-name=explorer -toggle -no-quit<CR>
-\ :vertical resize 30<CR>
+\ :vertical resize 25<CR>
 \ :setlocal winfixwidth<CR>
 
 " Ctrl + R (VimFiler) : Refresh the list of files.
@@ -606,7 +606,7 @@ augroup FiletypeGroup
 augroup END
 "}}}
 
-" File Encodings "{{{
+" File Encodings, File Formats "{{{
 if s:is_windows && !has('gui_running')
     set encoding=cp932
 else
@@ -615,6 +615,10 @@ endif
 
 set fileencoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp,cp932
+
+" Uses the UNIX line-feed as default.
+set fileformat=unix
+set fileformats=unix,dos,mac
 
 " Create a new buffer with UTF-8.
 autocmd MyAutoCmd BufNewFile *    set fileencoding=utf-8
