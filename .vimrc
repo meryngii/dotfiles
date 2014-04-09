@@ -699,9 +699,7 @@ set backspace=indent,eol,start
 set hidden
 
 " Clipboard
-if has('gui_running')
-    set clipboard=unnamed
-endif
+set clipboard=unnamedplus
 
 " Disable beep.
 set vb t_vb=
