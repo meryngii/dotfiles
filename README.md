@@ -13,7 +13,7 @@ sudo apt-get install git vim-gnome
 2. Run commands below on the terminal at your *home directory*.
 
 ```bash
-git clone https://github.com/meryngii/dotfiles.git
+git clone --recursive https://github.com/meryngii/dotfiles.git
 cd dotfiles
 ./install.sh
 ```
@@ -30,7 +30,7 @@ Installation (Windows)
 2. Run commands below on the terminal at your *home directory*.
 
 ```bash
-git clone https://github.com/meryngii/dotfiles.git
+git clone --recursive https://github.com/meryngii/dotfiles.git
 ```
 
 3. Run `install.bat` as a *Administrator*.
@@ -43,6 +43,6 @@ SSH Connection
 --------------
 
 ```bash
-git clone git@github.com:meryngii/dotfiles
+git clone --recursive git@github.com:meryngii/dotfiles
 ```
 
