@@ -49,7 +49,18 @@ ZSH_THEME="jreese"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git brew)
+
+case "${OSTYPE}" in
+darwin*)
+    plugins=(git svn autojump brew trash)
+    [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+    ;;
+linux*)
+    plugins=(git svn autojump debian)
+    [[ -s /usr/share/autojump/autojump.zsh ]] && . /usr/share/autojump/autojump.zsh
+    ;;
+esac
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,11 +79,26 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+export EDITOR='vim'
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Directory
+setopt auto_cd
+setopt auto_pushd
+setopt auto_resume
+setopt extended_history
+setopt pushd_ignore_dups
+
+#function chpwd() {
+#    emulate -L zsh
+#    autojump -a $pwd
+#    echo $pwd > ~/.curdir
+#}
 
 case "${OSTYPE}" in
 darwin*)
@@ -106,10 +132,11 @@ esac
 
 # Aliases
 alias ]="open"
+alias v="vim"
 
 # Suffix Aliases
-alias -s {png,jpg,bmp,PNG,JPG,BMP}=eog
-alias -s {htm,html}=chrome
+alias -s {png,jpg,bmp,PNG,JPG,BMP}=open
+alias -s {htm,html}=open
 
 function extract() {
     case $1 in
@@ -145,18 +172,54 @@ alias -s hs=runhaskell
 alias -s ml=ocaml
 alias -s py=python
 
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+#setopt correct
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+#zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+
+autoload -U compinit
+compinit
+zstyle ':completion:*:default' menu select=2
+
+# Packs completion.
+setopt list_packed
+
+setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+
 
 # vi Keybinding mode
+#bindkey -v '^Y' push-line
 bindkey -v
 
-bindkey -v '^Y' push-line
+export KEYTIMEOUT=1
 
-bindkey "^p" history-beginning-search-backward-end # Ctrl + p
-bindkey "^n" history-beginning-search-forward-end  # Chrl + n
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^n" history-beginning-search-forward-end
+
+bindkey '^r' history-incremental-search-backward
 
 bindkey "^[OH"  beginning-of-line # 'Home'
 bindkey "^[OF"  end-of-line       # 'End'
 bindkey "^[[3~" delete-char       # 'Delete'
 
+function zle-line-init zle-keymap-select {
+    case $KEYMAP in
+    vicmd)
+        RPROMPT="[NORMAL]"
+        ;;
+    main|viins)
+        RPROMPT="[INSERT]"
+        ;;
+    esac
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+setopt TRANSIENT_RPROMPT
+
+cd `cat ~/.curdir`
 
