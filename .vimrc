@@ -655,8 +655,13 @@ nnoremap <C-m>   :make<Space>
 nnoremap <C-A-m> :make clean<CR>
 
 "}}}
+         "movl (%%rbx), %%eax;"
 
 "}}}
+
+" Path {{{
+let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/local/include") . glob("/usr/local/include/c++/*"), "\n", ",", "g")
+" }}}
 
 " Syntax "{{{
 
