@@ -704,7 +704,10 @@ set backspace=indent,eol,start
 set hidden
 
 " Clipboard
-set clipboard=unnamedplus
+if has("clipboard")
+    set clipboard^=unnamedplus
+    set clipboard^=unnamed
+end
 
 " Disable beep.
 set vb t_vb=
@@ -784,6 +787,9 @@ set cursorline
 
 " Enable hidden buffers.
 set hidden
+
+" Enables smartcase.
+set smartcase
 
 " Keep the visual mode on indentation.
 vnoremap <silent> > >gv
