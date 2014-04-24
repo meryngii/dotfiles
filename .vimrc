@@ -788,6 +788,9 @@ set cursorline
 " Enable hidden buffers.
 set hidden
 
+" Enables ignoring case.
+set ignorecase
+
 " Enables smartcase.
 set smartcase
 
