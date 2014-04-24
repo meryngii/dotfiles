@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LINKED_FILES=".vim .vimrc .gvimrc .vimshrc .bashrc .zshrc .gitconfig .gitignore"
+LINKED_FILES=".vim .vimrc .gvimrc .vimshrc"
 
 for LINKED in ${LINKED_FILES};
 do
