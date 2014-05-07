@@ -222,5 +222,19 @@ zle -N zle-keymap-select
 
 setopt TRANSIENT_RPROMPT
 
+# less coloring
+case "${OSTYPE}" in
+darwin*)
+    # For Mac OS X
+    export LESS='-R'
+    export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+    ;;
+linux*)
+    # For Linux
+    export LESS='-R'
+    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+    ;;
+esac
+
 #cd `cat ~/.curdir`
 
