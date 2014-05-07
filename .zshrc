@@ -133,6 +133,7 @@ esac
 # Aliases
 alias ]="open"
 alias v="vim"
+alias p="popd"
 
 # Suffix Aliases
 alias -s {png,jpg,bmp,PNG,JPG,BMP}=open
@@ -221,5 +222,5 @@ zle -N zle-keymap-select
 
 setopt TRANSIENT_RPROMPT
 
-cd `cat ~/.curdir`
+#cd `cat ~/.curdir`
 
