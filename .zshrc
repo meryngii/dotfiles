@@ -236,5 +236,13 @@ linux*)
     ;;
 esac
 
+
+case "${OSTYPE}" in
+darwin*)
+    # For Mac OS X
+    export PATH="/usr/local/bin:$PATH"
+    ;;
+esac
+
 #cd `cat ~/.curdir`
 
