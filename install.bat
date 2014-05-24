@@ -15,6 +15,7 @@ del /p %HOME%\.zshrc
 del /p %HOME%\.gitconfig
 del /p %HOME%\.gitignore
 del /p %HOME%\.minttyrc
+del /p %HOME%\.oh-my-zsh
 
 mklink /d %HOME%\.vim       dotfiles\.vim
 mklink    %HOME%\.vimrc     dotfiles\.vimrc
@@ -24,6 +25,7 @@ mklink    %HOME%\.zshrc     dotfiles\.zshrc
 mklink    %HOME%\.gitconfig dotfiles\.gitconfig
 mklink    %HOME%\.gitignore dotfiles\.gitignore
 mklink    %HOME%\.minttyrc  dotfiles\.minttyrc
+mklink    %HOME%\.oh-my-zsh dotfiles\.oh-my-zsh
 
 pause
 

@@ -128,6 +128,8 @@ linux*)
     }
     
     ;;
+cygwin*)
+    alias open=cygstart
 esac
 
 # Aliases
