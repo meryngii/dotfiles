@@ -8,6 +8,9 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="jreese"
 
+# Loads the local configuration.
+[ -f $HOME/.zshrc.localenv ] && source $HOME/.zshrc.localenv
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -106,9 +109,6 @@ darwin*)
     alias ls="ls -G"
     alias ll="ls -lG"
     alias la="ls -laG"
-
-    path=(${path} /Applications/Inkscape.app/Contents/MacOS/(N-/))
-    path=(${path} /Applications/Maxima.app/Contents/Resources/(N-/))
 
     alias chrome='open -a Google\ Chrome'
 
@@ -227,17 +227,17 @@ setopt TRANSIENT_RPROMPT
 # less coloring
 case "${OSTYPE}" in
 darwin*)
-    # For Mac OS X
-    export LESS='-R'
-    export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+    LESSPIPE=`brew --prefix source-highlight 2>/dev/null`/bin/src-hilite-lesspipe.sh
     ;;
-linux*)
-    # For Linux
-    export LESS='-R'
-    export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+*)
+    LESSPIPE="src-hilite-lesspipe.sh"
     ;;
 esac
 
+if type ${LESSPIPE} >/dev/null 2>&1; then
+    export LESS='-R'
+    export LESSOPEN="| ${LESSPIPE} %s"
+fi
 
 case "${OSTYPE}" in
 darwin*)
@@ -245,6 +245,9 @@ darwin*)
     export PATH="/usr/local/bin:$PATH"
     ;;
 esac
+
+# Loads the local configuration.
+[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
 #cd `cat ~/.curdir`
 

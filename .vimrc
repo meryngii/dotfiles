@@ -89,6 +89,8 @@ NeoBundle 'bling/vim-airline'
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-rooter'
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-easytags'
 
 " Quick-run
 NeoBundle 'thinca/vim-quickrun'
