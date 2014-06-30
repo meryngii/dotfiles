@@ -68,6 +68,7 @@ NeoBundle "sudo.vim"
 NeoBundle 'Align'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'surround.vim'
+NeoBundle 'bkad/CamelCaseMotion'
 " Comment
 NeoBundle 'tomtom/tcomment_vim'
 " View
@@ -393,6 +394,7 @@ function! ToggleOption(option_name)
 endfunction
 "}}}
 
+" Alt key on Mac. {{{
 if s:is_mac && has('gui_running')
     " Use option key as meta key.
     set macmeta
@@ -400,6 +402,7 @@ if s:is_mac && has('gui_running')
     " Disable some default key-bindings of MacVim.
     let macvim_skip_cmd_opt_movement = 1
 endif
+" }}}
 
 " Alt + Arrow : Resize window "{{{
 nnoremap <silent> <A-Left>    :vertical resize -5<cr>
@@ -424,6 +427,9 @@ nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
 imap <F1> <nop>
+
+" Disable Ex-mode.
+nnoremap Q q
 
 " Ctrl + c : Move to the directory of the current buffer. "{{{
 function! s:ChangeCurrentDir(directory, bang)
@@ -465,12 +471,13 @@ nnoremap [Space]fixh   :<C-u>call ToggleOption('winfixheight')<CR>
 
 "}}}
 
-" Keep the correct indent despite blank lines.
+" Keep the correct indent despite blank lines. {{{
 nnoremap o oX<C-h>
 nnoremap O OX<C-h>
 inoremap <CR> <CR>X<C-h>
+" }}}
 
-" :RemoveSwap : Remove all swap files.
+" :RemoveSwap : Remove all swap files. {{{
 function! s:remove_swapfiles()
     let list = split(glob("~/.vim/swap/*"), "\n")
     for file in list
@@ -479,6 +486,50 @@ function! s:remove_swapfiles()
     endfor
 endfunction
 command! -nargs=0 RemoveSwap  call s:remove_swapfiles()
+" }}}
+
+" CamelCaseMotion
+map <S-W> <Plug>CamelCaseMotion_w
+map <S-B> <Plug>CamelCaseMotion_b
+map <S-E> <Plug>CamelCaseMotion_e
+
+" Key Bindings for Insert Mode {{{
+
+" <C-t>: insert tab.
+inoremap <C-t>  <C-v><TAB>
+" <C-d>: delete char.
+inoremap <C-d>  <Del>
+" <C-a>: move to head.
+inoremap <silent><C-a>  <C-o>^
+" Enable undo <C-w> and <C-u>.
+inoremap <C-w>  <C-g>u<C-w>
+inoremap <C-u>  <C-g>u<C-u>
+
+" }}}
+
+" Key Bindings for Command-line mode "{{{
+
+" <C-a>, A: move to head.
+cnoremap <C-a>          <Home>
+" <C-b>: previous char.
+cnoremap <C-b>          <Left>
+" <C-d>: delete char.
+cnoremap <C-d>          <Del>
+" <C-e>, E: move to end.
+cnoremap <C-e>          <End>
+" <C-f>: next char.
+cnoremap <C-f>          <Right>
+" <C-n>: next history.
+cnoremap <C-n>          <Down>
+" <C-p>: previous history.
+cnoremap <C-p>          <Up>
+" <C-k>, K: delete to end.
+cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
+      \ '' : getcmdline()[:getcmdpos()-2]<CR>
+" <C-y>: paste.
+cnoremap <C-y>          <C-r>*
+
+"}}}
 
 "}}}
 
@@ -603,7 +654,7 @@ nnoremap <C-j> :<C-u>UniteWithCursorWord -immediately tag<CR>
 
 "}}}
 
-" File Type {{{
+" File Type "{{{
 augroup FiletypeGroup
     autocmd!
 
@@ -658,9 +709,9 @@ nnoremap <C-A-m> :make clean<CR>
 
 "}}}
 
-" Path {{{
+" Path "{{{
 let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/local/include") . glob("/usr/local/include/c++/*"), "\n", ",", "g")
-" }}}
+"}}}
 
 " Syntax "{{{
 
@@ -719,11 +770,11 @@ autocmd MyAutoCmd FileType text setlocal textwidth=0
 " (Use <C-w>= to resize the windows manually.)
 set noequalalways
 
-" Colorscheme "{{{
-syntax on
-colorscheme desert
+" Always show the status bar.
 set laststatus=2
-"}}}
+
+" Enable the syntax highlighting.
+syntax on
 
 " Status Line "{{{
 
@@ -824,5 +875,50 @@ augroup END
 cd ~
 
 "}}}
+
+" Colorscheme {{{
+
+let g:jellybeans_background_color = "000000"
+
+if !exists("g:jellybeans_use_lowcolor_black") || g:jellybeans_use_lowcolor_black
+    let s:termBlack = "Black"
+else
+    let s:termBlack = "Grey"
+endif
+
+let g:jellybeans_overrides = {
+\    "TabLine" : {'guifg': '000000', 'guibg': 'b0b8c0',
+\                 'attr': '',
+\                 'ctermfg': '', 'ctermbg': s:termBlack,
+\                  },
+\    "TabLineSel" : {'guifg': '000000', 'guibg': 'f0f0f0',
+\                 'attr': 'bold',
+\                 'ctermfg': '', 'ctermbg': s:termBlack,
+\                  },
+\    "Comment" : {'guifg': '888888', 'guibg': '',
+\                 'attr': '',
+\                 'ctermfg': 'Grey', 'ctermbg': '',
+\                  },
+\    "StatusLine" : {'guifg': '000000', 'guibg': 'dddddd',
+\                 'attr': '',
+\                 'ctermfg': '', 'ctermbg': 'White',
+\                  },
+\    "StatusLineNC" : {'guifg': 'ffffff', 'guibg': '403c41',
+\                 'attr': '',
+\                 'ctermfg': 'White', 'ctermbg': 'Black',
+\                  },
+\    "StatusLineFile" : {'guifg': 'ffffff', 'guibg': '',
+\                 'attr': '',
+\                 'ctermfg': 'White', 'ctermbg': 'Black',
+\                  },
+\    "Folded" : {'guifg': 'a0a8b0', 'guibg': '384048',
+\                 'attr': '',
+\                 'ctermfg': s:termBlack, 'ctermbg': '',
+\                  },
+\}
+
+colorscheme desert
+
+" }}}
 
 " vim: foldmethod=marker
