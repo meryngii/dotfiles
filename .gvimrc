@@ -41,3 +41,6 @@ endif
 " Disable beep.
 set vb t_vb=
 
+
+set imdisable
+

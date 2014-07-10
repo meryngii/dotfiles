@@ -106,6 +106,10 @@ NeoBundle 'scrooloose/syntastic'
 " Game
 NeoBundle 'rbtnn/puyo.vim'
 
+if !s:is_windows && !s:is_mac 
+    NeoBundle 'anekos/felis-cat-igirisu-toast-express'
+endif
+
 filetype plugin on
 filetype plugin indent off
 
@@ -382,6 +386,10 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 let g:airline#extensions#tabline#enabled = 1
 
+"}}}
+
+" EasyTags "{{{
+let g:easytags_suppress_ctags_warning = 1
 "}}}
 
 "}}}
@@ -714,6 +722,9 @@ let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/loc
 "}}}
 
 " Syntax "{{{
+
+" Enable the spell checker.
+set spell
 
 " Show the syntax name on the cursor position.
 command! -bang -bar Highlight :echo synIDattr(synID(line('.'), col('.'), 0), 'name')
