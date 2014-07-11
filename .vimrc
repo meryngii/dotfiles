@@ -55,6 +55,7 @@ if has('gui_running')
     NeoBundle "Shougo/neocomplete.vim"
     NeoBundle 'Shougo/neosnippet.vim'
 endif
+NeoBundle 'Shougo/neossh.vim'
 
 " unite sources
 NeoBundle "Shougo/unite-outline"
