@@ -190,9 +190,8 @@ setopt list_packed
 setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 
 
-# vi Keybinding mode
-#bindkey -v '^Y' push-line
-bindkey -v
+# Emacs key binding mode
+bindkey -e
 
 export KEYTIMEOUT=1
 
@@ -208,19 +207,19 @@ bindkey "^[OH"  beginning-of-line # 'Home'
 bindkey "^[OF"  end-of-line       # 'End'
 bindkey "^[[3~" delete-char       # 'Delete'
 
-function zle-line-init zle-keymap-select {
-    case $KEYMAP in
-    vicmd)
-        RPROMPT="[NORMAL]"
-        ;;
-    main|viins)
-        RPROMPT="[INSERT]"
-        ;;
-    esac
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+#function zle-line-init zle-keymap-select {
+#    case $KEYMAP in
+#    vicmd)
+#        RPROMPT="[NORMAL]"
+#        ;;
+#    main|viins)
+#        RPROMPT="[INSERT]"
+#        ;;
+#    esac
+#    zle reset-prompt
+#}
+#zle -N zle-line-init
+#zle -N zle-keymap-select
 
 setopt TRANSIENT_RPROMPT
 
