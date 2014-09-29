@@ -132,6 +132,8 @@ cygwin*)
     alias open=cygstart
 esac
 
+alias sl=ls
+
 # Aliases
 alias ]="open"
 alias v="vim"
