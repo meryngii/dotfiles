@@ -92,11 +92,13 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'xolox/vim-misc'
-NeoBundle 'xolox/vim-easytags'
+"NeoBundle 'xolox/vim-easytags'
 
 " Quick-run
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tyru/open-browser.vim'
+
+NeoBundle 'kannokanno/previm'
 
 " Folding
 NeoBundle 'LeafCage/foldCC'
@@ -875,6 +877,13 @@ set makeprg=make\ -w
 
 " Automatic reloading.
 set autoread
+
+" 
+augroup InsModeAu
+    autocmd!
+    autocmd InsertEnter,CmdwinEnter * set noimdisable
+    autocmd InsertLeave,CmdwinLeave * set imdisable
+augroup END
 
 " Check the external changes on WinEnter. "{{{
 augroup vimrc-checktime
