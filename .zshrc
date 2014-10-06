@@ -132,6 +132,7 @@ cygwin*)
     alias open=cygstart
 esac
 
+alias l=ls
 alias sl=ls
 
 # Aliases
@@ -184,13 +185,15 @@ alias -s py=python
 
 autoload -U compinit
 compinit
-zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*:default' menu select
+#zstyle ':completion:*' verbose yes
+#zstyle ':completion:*' tag-order local-directories
 
 # Packs completion.
 setopt list_packed
 
+setopt menu_complete
 setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-
 
 # Emacs key binding mode
 bindkey -e
@@ -209,6 +212,44 @@ bindkey "^[OH"  beginning-of-line # 'Home'
 bindkey "^[OF"  end-of-line       # 'End'
 bindkey "^[[3~" delete-char       # 'Delete'
 
+function cdforward() {
+    if [ ! -z "$forwardlist" ]; then
+        cd $forwardlist[1]
+        shift forwardlist
+        zle reset-prompt
+    fi
+}
+function cdback() {
+    if [ ! -z "$(dirs)" ]; then
+        if [ ! -z "$forwardlist" ]; then
+            if [ $(pwd) = $forwardlist[1] ]; then
+                return
+            fi
+        fi
+        forwardlist=($(pwd) $forwardlist)
+        popd > /dev/null 2>&1 && zle reset-prompt
+    fi
+}
+
+zle -N cdforward
+bindkey "^u" cdforward
+zle -N cdback
+bindkey "^o" cdback
+
+# expand-or-complete-or-list-files
+function expand-or-complete-or-list-files() {
+    if [[ $#BUFFER == 0 ]]; then
+        BUFFER="ls "
+        CURSOR=3
+        zle list-choices
+        zle backward-kill-word
+    else
+        zle expand-or-complete
+    fi
+}
+zle -N expand-or-complete-or-list-files
+# bind to tab
+bindkey '^I' expand-or-complete-or-list-files
 #function zle-line-init zle-keymap-select {
 #    case $KEYMAP in
 #    vicmd)
