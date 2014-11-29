@@ -23,6 +23,8 @@ set swapfile
 set directory=~/.vim/swap
 set backup
 set backupdir=~/.vim/backup
+set undofile
+set undodir=~/.vim/backup
 "}}}
 
 " NeoBundle and Loaded plugins "{{{
@@ -546,7 +548,8 @@ cnoremap <C-y>          <C-r>*
 
 " Folding "{{{
 set foldenable
-set foldmethod=marker
+"set foldmethod=marker
+set foldmethod=syntax
 set commentstring=%s
 set foldtext=FoldCCtext()
 
@@ -577,12 +580,12 @@ noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
 " z : Toggle the folding.
 noremap z  za
 
-augroup FoldingCommentGroup
-    autocmd!
-    autocmd FileType lua  setlocal commentstring=--%s
-    autocmd FileType vim  setlocal commentstring=\"%s
-    autocmd FileType php  setlocal commentstring=//%s
-augroup END
+"augroup FoldingCommentGroup
+"    autocmd!
+"    autocmd FileType *.lua  setlocal commentstring=--%s
+"    autocmd FileType *.vim  setlocal commentstring=\"%s
+"    autocmd FileType *.php  setlocal commentstring=//%s
+"augroup END
 
 "}}}
 
