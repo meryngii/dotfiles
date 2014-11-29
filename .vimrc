@@ -24,7 +24,7 @@ set directory=~/.vim/swap
 set backup
 set backupdir=~/.vim/backup
 set undofile
-set undodir=~/.vim/backup
+set undodir=~/.vim/undo
 "}}}
 
 " NeoBundle and Loaded plugins "{{{
@@ -34,7 +34,7 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -117,6 +117,8 @@ endif
 
 filetype plugin on
 filetype plugin indent off
+
+call neobundle#end()
 
 " Check if the specified plugins are installed.
 NeoBundleCheck
