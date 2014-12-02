@@ -18,13 +18,16 @@ augroup END
 
 "}}}
 
-" swap & backup "{{{
+" swap, backup and undo "{{{
 set swapfile
 set directory=~/.vim/swap
 set backup
 set backupdir=~/.vim/backup
-set undofile
-set undodir=~/.vim/undo
+
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.vim/undo
+endif
 "}}}
 
 " NeoBundle and Loaded plugins "{{{
