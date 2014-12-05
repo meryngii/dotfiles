@@ -18,11 +18,16 @@ augroup END
 
 "}}}
 
-" swap & backup "{{{
+" swap, backup and undo "{{{
 set swapfile
 set directory=~/.vim/swap
 set backup
 set backupdir=~/.vim/backup
+
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.vim/undo
+endif
 "}}}
 
 " NeoBundle and Loaded plugins "{{{
@@ -32,7 +37,7 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -115,6 +120,8 @@ endif
 
 filetype plugin on
 filetype plugin indent off
+
+call neobundle#end()
 
 " Check if the specified plugins are installed.
 NeoBundleCheck
@@ -546,7 +553,8 @@ cnoremap <C-y>          <C-r>*
 
 " Folding "{{{
 set foldenable
-set foldmethod=marker
+"set foldmethod=marker
+set foldmethod=syntax
 set commentstring=%s
 set foldtext=FoldCCtext()
 
@@ -577,12 +585,12 @@ noremap [fold]w :<C-u>echo FoldCCnavi()<CR>
 " z : Toggle the folding.
 noremap z  za
 
-augroup FoldingCommentGroup
-    autocmd!
-    autocmd FileType lua  setlocal commentstring=--%s
-    autocmd FileType vim  setlocal commentstring=\"%s
-    autocmd FileType php  setlocal commentstring=//%s
-augroup END
+"augroup FoldingCommentGroup
+"    autocmd!
+"    autocmd FileType *.lua  setlocal commentstring=--%s
+"    autocmd FileType *.vim  setlocal commentstring=\"%s
+"    autocmd FileType *.php  setlocal commentstring=//%s
+"augroup END
 
 "}}}
 

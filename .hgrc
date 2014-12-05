@@ -1,0 +1,16 @@
+
+[extensions]
+color =
+eol =
+graphlog =
+fetch =
+mq =
+rebase =
+pager =
+shelve =
+
+[pager]
+pager = LESS='FRX' less
+
+%include .hgrc.local
+
