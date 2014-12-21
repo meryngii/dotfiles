@@ -900,6 +900,9 @@ augroup vimrc-checktime
 augroup END
 "}}}
 
+" Disable completeopt.
+set completeopt=menuone
+
 " Default directory to HOME.
 cd ~
 
