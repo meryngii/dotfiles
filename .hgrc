@@ -8,6 +8,9 @@ mq =
 rebase =
 pager =
 shelve =
+transplant =
+histedit =
+purge =
 
 [pager]
 pager = LESS='FRX' less
