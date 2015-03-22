@@ -684,6 +684,8 @@ augroup FiletypeGroup
     autocmd BufRead,BufNewFile *.mkd  set filetype=markdown
     autocmd BufRead,BufNewFile *.md  set filetype=markdown
 augroup END
+
+let g:tex_flavor = "latex"
 "}}}
 
 " File Encodings, File Formats "{{{
