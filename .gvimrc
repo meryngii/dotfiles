@@ -27,7 +27,8 @@ if s:is_windows
 elseif s:is_mac
     "--- Mac OS X ---
 
-    set guifont=Monaco:h12
+    "set guifont=Monaco:h12
+    set guifont=Ricty Diminished:h10:cSHIFTJIS
 
 else
     "--- Linux ---

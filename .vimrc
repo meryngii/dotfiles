@@ -701,7 +701,7 @@ else
 endif
 
 set fileencoding=utf-8
-set fileencodings=utf-8,ucs-bom,iso-2022-jp,cp932
+set fileencodings=iso-2022-jp,euc-jp,cp932,ucs-bom,utf-8
 
 " Uses the UNIX line-feed as default.
 set fileformat=unix
@@ -743,6 +743,9 @@ let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/loc
 
 " Enable the spell checker.
 set spell
+
+" Disable spell checking on CJK characters.
+set spelllang=en,cjk
 
 " Show the syntax name on the cursor position.
 command! -bang -bar Highlight :echo synIDattr(synID(line('.'), col('.'), 0), 'name')
