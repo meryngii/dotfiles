@@ -773,9 +773,6 @@ set number
 " Sets the height of command line.
 set cmdheight=1
 
-" Highlights current line.
-set cursorline
-
 set list
 set listchars=tab:▸\ ,eol:¬
 
@@ -864,8 +861,14 @@ endfunction
 
 "}}}
 
-" Highlight current line.
+" Highlight the current line.
 set cursorline
+
+" Disable cursorline on LaTeX files.
+augroup MyAutoCmd
+    autocmd FileType tex :NoMatchParen
+    au FileType tex setlocal nocursorline
+augroup END
 
 " Enable hidden buffers.
 set hidden
