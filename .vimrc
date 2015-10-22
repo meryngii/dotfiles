@@ -363,15 +363,21 @@ endif
 "}}}
 
 " QuickRun "{{{
-let g:quickrun_config = {}
+let g:quickrun_config = {
+    \   "_": {
+    \     'outputter/buffer/split': 'belowright 12split',
+    \     'outputter/buffer/into': 1
+    \   }
+    \ }
 let g:quickrun_config['markdown'] = {
-      \ 'type' : 'markdown/pandoc',
-      \ 'outputter': 'browser',
-      \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
-      \ }
+    \ 'type' : 'markdown/pandoc',
+    \ 'outputter': 'browser',
+    \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
+    \ }
 
 " [Space]e : QuickRun
 nnoremap <silent> <Space>e  :QuickRun<CR>
+
 "}}}
 
 " Other Plugins "{{{
