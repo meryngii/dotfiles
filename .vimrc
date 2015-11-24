@@ -867,14 +867,14 @@ endfunction
 
 "}}}
 
-" Highlight the current line.
-set cursorline
-
-" Disable cursorline on LaTeX files.
-augroup MyAutoCmd
-    autocmd FileType tex :NoMatchParen
-    au FileType tex setlocal nocursorline
-augroup END
+"" Highlight the current line.
+"set cursorline
+"
+"" Disable cursorline on LaTeX files.
+"augroup MyAutoCmd
+"    autocmd FileType tex :NoMatchParen
+"    au FileType tex setlocal nocursorline
+"augroup END
 
 " Enable hidden buffers.
 set hidden
