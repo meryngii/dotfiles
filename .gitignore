@@ -7,3 +7,11 @@
 # Windows
 Thumbs.db
 
+/.vim/.netrwlist
+
+/nvim/.netrwlist
+/nvim/swap/*
+/nvim/bundle/*
+/nvim/backup/*
+/nvim/undo/*
+
