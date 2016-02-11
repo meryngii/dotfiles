@@ -55,7 +55,6 @@ NeoBundle "Shougo/vimshell.vim"
 NeoBundle "Shougo/unite.vim"
 NeoBundle "Shougo/neomru.vim"
 NeoBundle "Shougo/vimfiler.vim"
-NeoBundle 'git://github.com/Shougo/vinarise.git' " avoids error
 if has('gui_running')
     NeoBundle "Shougo/neocomplete.vim"
     NeoBundle 'Shougo/neosnippet.vim'
@@ -75,7 +74,6 @@ NeoBundle 'Align'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'surround.vim'
 NeoBundle 'bkad/CamelCaseMotion'
-" Comment
 NeoBundle 'tomtom/tcomment_vim'
 " View
 NeoBundle 'thinca/vim-fontzoom'
@@ -109,10 +107,7 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'LeafCage/foldCC'
 
 " Syntax checking
-NeoBundle 'scrooloose/syntastic'
-
-" Game
-NeoBundle 'rbtnn/puyo.vim'
+"NeoBundle 'scrooloose/syntastic'
 
 if !s:is_windows && !s:is_mac 
     NeoBundle 'anekos/felis-cat-igirisu-toast-express'
@@ -393,15 +388,8 @@ let g:vimshell_right_prompt = 'getcwd()'
 let g:Align_xstrlen = 3
 "}}}
 
-" Syntastic "{{{
-let g:syntastic_cpp_compiler = 'g++-4.8'
-let g:syntastic_cpp_compiler_options = ' -std=c++11'
-"}}}
-
 " Airline "{{{
-
 let g:airline#extensions#tabline#enabled = 1
-
 "}}}
 
 " EasyTags "{{{
@@ -751,7 +739,7 @@ let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/loc
 set spell
 
 " Disable spell checking on CJK characters.
-set spelllang=en,cjk
+set spelllang=en_us,cjk
 
 " Show the syntax name on the cursor position.
 command! -bang -bar Highlight :echo synIDattr(synID(line('.'), col('.'), 0), 'name')

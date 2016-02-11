@@ -51,7 +51,9 @@ NeoBundle "w0ng/vim-hybrid"
 call neobundle#end()
 
 " Required:
-filetype plugin indent on
+"filetype plugin indent on
+filetype plugin on
+filetype plugin indent off
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -121,6 +123,16 @@ set noequalalways
 vnoremap <silent> > >gv
 vnoremap <silent> < <gv
 
+" Keep the correct indent despite blank lines. {{{
+nnoremap o oX<C-h>
+nnoremap O OX<C-h>
+inoremap <CR> <CR>X<C-h>
+" }}}
+
+" Show tabs and new-lines.
+set list
+set listchars=tab:▸\ ,eol:¬
+
 " Force :make to use the option --print-directory.
 set makeprg=make\ -w
 
@@ -128,7 +140,7 @@ set makeprg=make\ -w
 set completeopt=menuone
 
 " Do not jump to first character with page commands.
-set nostartofline
+"set nostartofline
 
 " Disable automatic comment insertion.
 autocmd MyAutoCmd FileType * setlocal formatoptions-=ro
@@ -193,6 +205,12 @@ nnoremap <silent> [Space]t
 " Escape from the terminal window.
 tnoremap <Esc> <C-\><C-n>
 
+" Disable the default action of F1 to show help (to prevent mistype)
+nmap <F1> <nop>
+imap <F1> <nop>
+
+
+
 "}}}
 
 " Folding "{{{
@@ -220,7 +238,20 @@ noremap [fold]m    zm
 " [D]elete a folding.
 noremap [fold]d    zd
 
+" <Ctrl-H> : Toggle the folding.
+noremap <C-H>   za
+
 "}}}
+
+" Spell Checkicng {{{
+
+" Enable the spell checker.
+set spell
+
+" Disable spell checking on CJK characters.
+set spelllang=en_us,cjk
+
+" }}}
 
 " VimFiler "{{{
 
@@ -247,10 +278,12 @@ nnoremap <silent> [Space]x
 
 "}}}
 
-" Styles {{{
+" Styles "{{{
 
+" Enable syntax highlighting.
 syntax on
 
+" Use the dark colorscheme by default.
 set background=dark
 
 "colorscheme desert
