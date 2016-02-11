@@ -738,8 +738,8 @@ let &path = &path . "," . substitute(glob("/usr/include/c++/*") . glob("/usr/loc
 " Enable the spell checker.
 set spell
 
-" Disable spell checking on CJK characters.
-set spelllang=en_us,cjk
+" Disable spell checking on CJK characters. (Ignore the warning.)
+silent set spelllang=en_us,cjk
 
 " Show the syntax name on the cursor position.
 command! -bang -bar Highlight :echo synIDattr(synID(line('.'), col('.'), 0), 'name')
