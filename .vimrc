@@ -58,6 +58,7 @@ NeoBundle "Shougo/vimfiler.vim"
 if has('gui_running')
     NeoBundle "Shougo/neocomplete.vim"
     NeoBundle 'Shougo/neosnippet.vim'
+    NeoBundle 'Shougo/neosnippet-snippets'
 endif
 NeoBundle 'Shougo/neossh.vim'
 
