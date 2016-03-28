@@ -397,6 +397,10 @@ let g:airline#extensions#tabline#enabled = 1
 let g:easytags_suppress_ctags_warning = 1
 "}}}
 
+" Previm "{{{
+let g:previm_custom_css_path = $HOME . '/dotfiles/previm.css'
+"}}}
+
 "}}}
 
 " Key Bindings "{{{
@@ -434,8 +438,8 @@ else
 end
 " }}}
 
-" Ctrl + s : Reload .vimrc & .gvimrc
-nnoremap <C-s> :source $MYVIMRC<cr>:source $MYGVIMRC<cr>
+" Ctrl + s : Save the current file
+nnoremap <silent> <C-S> :<C-u>update<CR>
 
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
