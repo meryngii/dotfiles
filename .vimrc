@@ -190,7 +190,7 @@ if has('gui_running')
     "let g:neocomplete#disable_auto_complete = 1
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
-    " Enable omni completion.
+    " Enable or disable omni completion.
     augroup OmniCompletionGroup
         autocmd!
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -198,22 +198,16 @@ if has('gui_running')
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        
+        autocmd FileType c setlocal omnifunc=
+        autocmd FileType cpp setlocal omnifunc=
     augroup END
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
     " Disable converter_case.
     call neocomplete#custom#source('_', 'converters', ['converter_abbr', 'converter_delimiter'])
+    
+    " Disable camel case completion.
+    let g:neocomplcache_enable_camel_case_completion = 0
 
     "-- neosnippet --
     " Plugin key-mappings.
