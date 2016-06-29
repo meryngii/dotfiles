@@ -4,7 +4,7 @@
 [ -f $HOME/.zshrc.localenv ] && source $HOME/.zshrc.localenv
 
 # Load zplug
-source ~/.zplug/zplug
+source ~/.zplug/init.zsh
 
 # Plugins managed by zplug
 zplug "plugins/git",   from:oh-my-zsh, nice:10, if:"(( $+commands[git] ))"
@@ -55,6 +55,7 @@ linux*)
     }
 esac
 
+alias l=ls
 alias sl=ls
 
 #export LSCOLORS=exfxcxdxbxegedabagacad
