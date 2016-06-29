@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LINKED_FILES=".oh-my-zsh .zshrc"
+LINKED_FILES=".zplug .zshrc"
 
 for LINKED in ${LINKED_FILES};
 do
