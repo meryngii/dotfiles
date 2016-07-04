@@ -36,6 +36,11 @@ setopt menu_complete
 setopt auto_param_slash
 setopt transient_rprompt
 
+# History
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
 # Aliases
 case "${OSTYPE}" in
 darwin*)
@@ -58,7 +63,6 @@ esac
 alias l=ls
 alias sl=ls
 
-#export LSCOLORS=exfxcxdxbxegedabagacad
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # Suffix Aliases
