@@ -555,6 +555,7 @@ set foldenable
 set foldmethod=syntax
 set commentstring=%s
 set foldtext=FoldCCtext()
+set foldlevelstart=20
 
 noremap [fold]     <Nop>
 nmap    [Space]f [fold]
