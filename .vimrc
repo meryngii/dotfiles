@@ -516,11 +516,6 @@ inoremap <silent><C-a>  <C-o>^
 inoremap <C-w>  <C-g>u<C-w>
 inoremap <C-u>  <C-g>u<C-u>
 
-" Key Bindings for US keyboard
-
-nnoremap ; :
-vnoremap ; :
-
 " }}}
 
 " Key Bindings for Command-line mode "{{{
