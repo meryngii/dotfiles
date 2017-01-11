@@ -31,6 +31,7 @@ if dein#load_state(s:dein_plugin_dir)
     
     call dein#add('Shougo/unite.vim')
     call dein#add('Shougo/vimfiler.vim')
+    call dein#add('Shougo/deoplete.nvim')
     call dein#add('w0ng/vim-hybrid')
     
     call dein#end()
@@ -43,7 +44,8 @@ endif
 
 "}}}
 
-filetype plugin indent on
+filetype plugin on
+filetype plugin indent off
 syntax enable
 
 " Swap, backup and undo "{{{
@@ -152,11 +154,11 @@ nnoremap  [Space]   <Nop>
 xnoremap  [Space]   <Nop>
 "}}}
 
-" Alt + Arrow : Resize window "{{{
-nnoremap <silent> <A-Left>    :vertical resize -5<cr>
-nnoremap <silent> <A-Right>   :vertical resize +5<cr>
-nnoremap <silent> <A-Up>      :resize -2<cr>
-nnoremap <silent> <A-Down>    :resize +2<cr>
+" Ctrl + Shift + Arrow : Resize window "{{{
+nnoremap <silent> <C-S-Left>    :vertical resize -5<cr>
+nnoremap <silent> <C-S-Right>   :vertical resize +5<cr>
+nnoremap <silent> <C-S-Up>      :resize -2<cr>
+nnoremap <silent> <C-S-Down>    :resize +2<cr>
 " }}}
 
 " Key Bindings for Command-line mode "{{{
@@ -225,7 +227,7 @@ noremap [fold]m    zm
 " [D]elete a folding.
 noremap [fold]d    zd
 
-" <Ctrl-H> : Toggle the folding.
+" Ctrl + H : Toggle the folding.
 noremap <C-H>   za
 
 "}}}
