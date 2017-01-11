@@ -7,10 +7,13 @@
 source ~/.zplug/init.zsh
 
 # Plugins managed by zplug
-zplug "plugins/git",   from:oh-my-zsh, nice:10, if:"(( $+commands[git] ))"
-zplug "themes/jreese", from:oh-my-zsh
+#zplug "plugins/git",   from:oh-my-zsh
 
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+# Set the priority when loading
+# e.g., zsh-syntax-highlighting must be loaded
+# after executing compinit command and sourcing other plugins
+# (If the defer tag is given 2 or above, run after compinit command)
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -22,6 +25,9 @@ fi
 
 # Load plugins.
 zplug load
+
+# Set prompt.
+PROMPT='%F{green}%n@%m%u%f %~ $ '
 
 # Options (directories)
 setopt auto_cd
