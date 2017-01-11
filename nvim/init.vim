@@ -32,6 +32,8 @@ if dein#load_state(s:dein_plugin_dir)
     call dein#add('Shougo/unite.vim')
     call dein#add('Shougo/vimfiler.vim')
     call dein#add('Shougo/deoplete.nvim')
+    call dein#add('Shougo/denite.nvim')
+    call dein#add('itchyny/lightline.vim')
     call dein#add('w0ng/vim-hybrid')
     
     call dein#end()
@@ -267,6 +269,12 @@ nnoremap <silent> [Space]x
 \ :vertical resize 25<CR>
 \ :setlocal winfixwidth<CR>
 \ :setlocal nonumber<CR>
+
+"}}}
+
+" Denite "{{{
+
+nnoremap <silent> [Space]b  :<C-u>Denite buffer<CR>
 
 "}}}
 
