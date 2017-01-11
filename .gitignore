@@ -11,7 +11,7 @@ Thumbs.db
 
 /nvim/.netrwlist
 /nvim/swap/*
-/nvim/bundle/*
+/nvim/dein/*
 /nvim/backup/*
 /nvim/undo/*
 

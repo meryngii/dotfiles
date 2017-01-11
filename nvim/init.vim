@@ -1,77 +1,62 @@
 "
-" Configuration for NeoVim
+" Configuration for Neovim
 "
 
-" Start-up "{{{
+" Initial setup "{{{
 
-" Note: Skip initialization for vim-tiny or vim-small.
-if 0 | endif
-
-if has('vim_starting')
-  if &compatible
-    " Be iMproved
+if &compatible
     set nocompatible
-  endif
 endif
 
-" Create a new autocmd group.
+" Set autocmd group.
 augroup MyAutoCmd
     autocmd!
 augroup END
 
-" }}}
 
-" NeoBundle "{{{
-
-if has('vim_starting')
-  " Required:
-  set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
-endif
-
-" Required:
-call neobundle#begin(expand('~/.config/nvim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
-" Note: You don't set neobundle setting in .gvimrc!
-
-" Thanks to Shougo-san
-NeoBundle "Shougo/unite.vim"
-NeoBundle "Shougo/vimfiler.vim"
-" Status Line
-NeoBundle "itchyny/lightline.vim"
-" Colorschemes
-NeoBundle "altercation/vim-colors-solarized"
-NeoBundle "w0ng/vim-hybrid"
-
-call neobundle#end()
-
-" Required:
-"filetype plugin indent on
-filetype plugin on
-filetype plugin indent off
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
+let s:config_home = expand('$HOME/.config/nvim')
 
 "}}}
 
+" dein.vim "{{{
+
+let s:dein_dir = s:config_home . '/dein.vim'
+let s:dein_plugin_dir = s:config_home . '/dein'
+
+exe 'set runtimepath+=' . s:dein_dir
+" http://superuser.com/questions/806595/why-the-runtimepath-in-vim-cannot-be-set-as-a-variable
+
+if dein#load_state(s:dein_plugin_dir)
+    call dein#begin(s:dein_plugin_dir)
+    
+    call dein#add('Shougo/unite.vim')
+    call dein#add('Shougo/vimfiler.vim')
+    call dein#add('w0ng/vim-hybrid')
+    
+    call dein#end()
+    call dein#save_state()
+endif
+
+if dein#check_install()
+    call dein#install()
+endif
+
+"}}}
+
+filetype plugin indent on
+syntax enable
+
 " Swap, backup and undo "{{{
 set swapfile
-set directory=~/.config/nvim/swap
+exe 'set directory=' . s:config_home . '/swap'
 set backup
-set backupdir=~/.config/nvim/backup
+exe 'set backupdir=' . s:config_home . '/backup'
 
-"" This feature has a bug in Neovim 0.1.0
-"if has('persistent_undo')
-"    set undofile
-"    set undodir=~/.config/nvim/undo
-"endif
+" Note: This feature has a bug in Neovim 0.1.0
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.config/nvim/undo
+endif
 "}}}
 
 " Built-in features "{{{
@@ -205,11 +190,13 @@ nnoremap <silent> [Space]t
 " Escape from the terminal window.
 tnoremap <Esc> <C-\><C-n>
 
+" Ctrl + s : Save the current file
+nnoremap <silent> <C-S> :<C-u>update<CR>
+inoremap <silent> <C-S> <C-o>:<C-u>update<CR>
+
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
 imap <F1> <nop>
-
-
 
 "}}}
 
@@ -243,13 +230,16 @@ noremap <C-H>   za
 
 "}}}
 
-" Spell Checkicng {{{
+" Spell Checking {{{
 
 " Enable the spell checker.
 set spell
 
 " Disable spell checking on CJK characters.
 set spelllang=en_us,cjk
+
+" Disable spell checking on :terminal.
+autocmd MyAutoCmd TermOpen * setlocal nospell
 
 " }}}
 
