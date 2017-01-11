@@ -95,7 +95,7 @@ NeoBundle 'bling/vim-airline'
 " External Tools
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-rooter'
-NeoBundle 'xolox/vim-misc'
+"NeoBundle 'xolox/vim-misc'
 "NeoBundle 'xolox/vim-easytags'
 
 " Quick-run
@@ -434,6 +434,7 @@ end
 
 " Ctrl + s : Save the current file
 nnoremap <silent> <C-S> :<C-u>update<CR>
+inoremap <silent> <C-S> <C-o>:<C-u>update<CR>
 
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
@@ -714,13 +715,7 @@ command! -bang -bar -complete=file -nargs=? Unicode Utf16<bang> <args>
 
 "command! -nargs=? Make  :Unite build:make:-w:<args> -no-start-insert -no-quit -winheight=10
 
-" Ctrl + m : Execute make.
-nnoremap <C-m>   :make<Space>
-" Ctrl + Alt + m : Execute make clean.
-nnoremap <C-A-m> :make clean<CR>
-
 "}}}
-         "movl (%%rbx), %%eax;"
 
 "}}}
 
