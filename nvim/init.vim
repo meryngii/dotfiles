@@ -33,8 +33,12 @@ if dein#load_state(s:dein_plugin_dir)
     call dein#add('Shougo/vimfiler.vim')
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('Shougo/denite.nvim')
+    call dein#add('Shougo/unite-outline')
     call dein#add('itchyny/lightline.vim')
     call dein#add('w0ng/vim-hybrid')
+    call dein#add('altercation/vim-colors-solarized')
+    call dein#add('morhetz/gruvbox')
+    call dein#add('tomasr/molokai')
     
     call dein#end()
     call dein#save_state()
@@ -198,6 +202,9 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <silent> <C-S> :<C-u>update<CR>
 inoremap <silent> <C-S> <C-o>:<C-u>update<CR>
 
+" [Space]c : Change the current directory to the opened file.
+nnoremap <silent>   [Space]c  :<C-u>cd %:p:h<CR>:<C-u>pwd<CR>
+
 " Disable the default action of F1 to show help (to prevent mistype)
 nmap <F1> <nop>
 imap <F1> <nop>
@@ -206,7 +213,7 @@ imap <F1> <nop>
 
 " Folding "{{{
 
-set foldenable
+set nofoldenable
 set foldmethod=syntax
 set commentstring=%s
 
@@ -231,6 +238,9 @@ noremap [fold]d    zd
 
 " Ctrl + H : Toggle the folding.
 noremap <C-H>   za
+
+" [Space]r : reload neovim configuration.
+nnoremap <silent> [Space]r  :<C-u>source $MYVIMRC<CR>
 
 "}}}
 
@@ -274,7 +284,15 @@ nnoremap <silent> [Space]x
 
 " Denite "{{{
 
+" [Space]b : Show buffers.
 nnoremap <silent> [Space]b  :<C-u>Denite buffer<CR>
+
+"}}}
+
+" Unite "{{{
+
+" [Space]o: Show outline.
+nnoremap <silent> [Space]o  :<C-u>Unite -buffer-name=outline outline<CR>
 
 "}}}
 
@@ -283,10 +301,13 @@ nnoremap <silent> [Space]b  :<C-u>Denite buffer<CR>
 " Enable syntax highlighting.
 syntax on
 
-" Use the dark colorscheme by default.
+" Use the dark background by default.
 set background=dark
 
 "colorscheme desert
+
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 colorscheme hybrid
 
 "}}}
