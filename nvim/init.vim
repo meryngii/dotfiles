@@ -23,6 +23,9 @@ let s:config_home = expand('$HOME/.config/nvim')
 let s:dein_dir = s:config_home . '/dein.vim'
 let s:dein_plugin_dir = s:config_home . '/dein'
 
+let g:dein#install_process_timeout = 3600
+
+
 exe 'set runtimepath+=' . s:dein_dir
 " http://superuser.com/questions/806595/why-the-runtimepath-in-vim-cannot-be-set-as-a-variable
 
