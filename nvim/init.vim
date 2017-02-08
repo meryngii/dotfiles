@@ -245,6 +245,17 @@ noremap <C-H>   za
 " [Space]r : reload neovim configuration.
 nnoremap <silent> [Space]r  :<C-u>source $MYVIMRC<CR>
 
+" :RemoveSwap : Remove all swap files. {{{
+function! s:remove_swapfiles()
+    let list = split(glob(s:config_home . "/swap/*"), "\n")
+    for file in list
+        echo file
+        call delete(file)
+    endfor
+endfunction
+command! -nargs=0 RemoveSwap  call s:remove_swapfiles()
+" }}}
+
 "}}}
 
 " Spell Checking {{{
