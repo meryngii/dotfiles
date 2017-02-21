@@ -42,14 +42,15 @@ if dein#load_state(s:dein_plugin_dir)
     call dein#add('altercation/vim-colors-solarized')
     call dein#add('morhetz/gruvbox')
     call dein#add('tomasr/molokai')
+    call dein#add('vim-scripts/gtags.vim')
     
     call dein#end()
     call dein#save_state()
 endif
 
-if dein#check_install()
-    call dein#install()
-endif
+"if dein#check_install()
+"    call dein#install()
+"endif
 
 "}}}
 
