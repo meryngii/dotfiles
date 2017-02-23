@@ -206,6 +206,10 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <silent> <C-S> :<C-u>update<CR>
 inoremap <silent> <C-S> <C-o>:<C-u>update<CR>
 
+" Ctrl + j : Jump using Gtags.
+nnoremap <silent> <C-J> :<C-u>GtagsCursor<CR>
+inoremap <silent> <C-J> <C-o>:<C-u>GtagsCursor<CR>
+
 " [Space]c : Change the current directory to the opened file.
 nnoremap <silent>   [Space]c  :<C-u>cd %:p:h<CR>:<C-u>pwd<CR>
 
