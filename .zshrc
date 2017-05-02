@@ -161,9 +161,6 @@ bindkey "^o" cdback
 ##    ;;
 ##esac
 
-# Run ssh-agent.
-type ssh-agent && eval `ssh-agent`
-
 # Loads the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
