@@ -142,6 +142,9 @@ set completeopt=menuone
 " Disable automatic comment insertion.
 autocmd MyAutoCmd FileType * setlocal formatoptions-=ro
 
+" Enable mouse for all modes.
+set mouse=a
+
 "}}}
 
 " Indent "{{{
