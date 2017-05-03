@@ -71,6 +71,7 @@ alias sl=ls
 
 alias v=nvim
 alias g=git
+alias s=ssh
 
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
