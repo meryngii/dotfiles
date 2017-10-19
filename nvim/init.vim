@@ -200,7 +200,8 @@ cnoremap <C-y>          <C-r>*
 
 " [Space]t : Spawn a new terminal.
 nnoremap <silent> [Space]t
-\ :rightb 17sp<CR>:terminal<CR>
+\ :rightb 17sp +terminal<CR>
+\ :startinsert<CR>
 
 " Escape from the terminal window.
 tnoremap <Esc> <C-\><C-n>

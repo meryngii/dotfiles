@@ -9,7 +9,7 @@ Thumbs.db
 
 /.vim/.netrwlist
 
-/nvim/.netrwlist
+/nvim/.netrwhist
 /nvim/swap/*
 /nvim/dein/*
 /nvim/backup/*
